@@ -1,9 +1,9 @@
-#include <memory>
+#include <iomanip>
+#include <sstream>
 #include <openssl/cryptoerr_legacy.h>
 #include <openssl/rsa.h>
 #include <openssl/evp.h>
 #include <openssl/pem.h>
-#include <cstring>
 #include "pkixcxx.hpp"
 
 namespace pkixcxx
@@ -62,6 +62,19 @@ namespace pkixcxx
     std::string data_string = std::string(data2);
     delete[] data2;
     return data_string;
+  }
+
+  std::string DERhexStr(const std::vector<unsigned char> &DER)
+  {
+    int counter = 0;
+    std::stringstream hex_str;
+    for(unsigned char val : DER)
+    {
+     hex_str << std::hex << std::setw(2) << std::setfill('0') << (int) val << (((counter+1)%16==0) ? '\n' : ' ' );
+     counter++;
+    }
+
+    return hex_str.str();
   }
 
   std::string pkix::getBundlePEM()

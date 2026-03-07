@@ -59,6 +59,15 @@ int pubPEM_test()
   return 0;
 }
 
+int pubDER_test()
+{
+  pkixcxx::pkix key_factory;
+  key_factory.generate_keypair(2048);
+  std::vector<unsigned char> pub_der= key_factory.getPubDER();
+  std::cout << pkixcxx::DERhexStr(pub_der) << std::endl;
+  return 0;
+}
+
 int bundlePEM_test()
 {
   pkixcxx::pkix key_factory;
@@ -72,7 +81,6 @@ int bundlePEM_test()
 
 std::map<std::string,std::function<int()>> handler =
 {
-
   {"--factoryInit", &keyfactoryInit_test},
   {"--pairGen", &keypairGen_test},
   {"--pairRegen", &keypairRegen_test},
@@ -80,6 +88,7 @@ std::map<std::string,std::function<int()>> handler =
   {"--privPEM", &privPEM_test},
   {"--pubPEM", &pubPEM_test},
   {"--bundlePEM", &bundlePEM_test},
+  {"--pubDER", &pubDER_test},
 };
 
 void printUsage(std::string bin_name)

@@ -11,6 +11,7 @@ add_test(NAME "Keypair multi-generation" COMMAND pkixcxx-test --pairMultigen)
 add_test(NAME "PEM privkey string" COMMAND pkixcxx-test --privPEM)
 add_test(NAME "PEM pubkey string" COMMAND pkixcxx-test --pubPEM)
 add_test(NAME "PEM bundle string" COMMAND pkixcxx-test --bundlePEM)
+add_test(NAME "DER pubkey" COMMAND pkixcxx-test --pubDER)
 add_custom_command(TARGET pkixcxx-test POST_BUILD COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure)
 
 
