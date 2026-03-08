@@ -1,4 +1,4 @@
-# PKIXCXX - Basic PKI C++ library
+# PKICXX
 - Simple PKI library C++ library based on OpenSSL
 - Wraps around the EVP C api to allow easy keypair generation
 
