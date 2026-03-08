@@ -2,18 +2,19 @@
 #include <map>
 #include <functional>
 #include <iostream>
+#include "pkicxx-pkic.hpp"
 #include "pkicxx.hpp"
 
 int keyfactoryInit_test()
 {
-  pkicxx::pkix key_factory;
+  pkicxx::pkic key_factory;
   
   return 0;
 }
 
 int keypairGen_test()
 {
-  pkicxx::pkix key_factory;
+  pkicxx::pkic key_factory;
   key_factory.generate_keypair(2048);
   
   return 0;
@@ -21,7 +22,7 @@ int keypairGen_test()
 
 int keypairRegen_test()
 {
-  pkicxx::pkix key_factory;
+  pkicxx::pkic key_factory;
   key_factory.generate_keypair(2048);
   key_factory.generate_keypair(2048);
   
@@ -31,7 +32,7 @@ int keypairRegen_test()
 
 int keypairMultigen_test()
 {
-  pkicxx::pkix key_factory;
+  pkicxx::pkic key_factory;
   
   for(int i=0; i<10; i++)
   {
@@ -43,7 +44,7 @@ int keypairMultigen_test()
 
 int privPEM_test()
 {
-  pkicxx::pkix key_factory;
+  pkicxx::pkic key_factory;
   key_factory.generate_keypair(2048);
   std::string priv = key_factory.getPrivPEM();
   std::cout << priv << std::endl;
@@ -52,7 +53,7 @@ int privPEM_test()
 
 int pubPEM_test()
 {
-  pkicxx::pkix key_factory;
+  pkicxx::pkic key_factory;
   key_factory.generate_keypair(2048);
   std::string pub = key_factory.getPubPEM();
   std::cout << pub << std::endl;
@@ -61,7 +62,7 @@ int pubPEM_test()
 
 int privDER_test()
 {
-  pkicxx::pkix key_factory;
+  pkicxx::pkic key_factory;
   key_factory.generate_keypair(2048);
   std::vector<unsigned char> priv_der= key_factory.getPrivDER();
   std::cout << pkicxx::DERhexStr(priv_der) << std::endl;
@@ -70,7 +71,7 @@ int privDER_test()
 
 int pubDER_test()
 {
-  pkicxx::pkix key_factory;
+  pkicxx::pkic key_factory;
   key_factory.generate_keypair(2048);
   std::vector<unsigned char> pub_der= key_factory.getPubDER();
   std::cout << pkicxx::DERhexStr(pub_der) << std::endl;
@@ -79,7 +80,7 @@ int pubDER_test()
 
 int bundlePEM_test()
 {
-  pkicxx::pkix key_factory;
+  pkicxx::pkic key_factory;
   key_factory.generate_keypair(2048);
   std::string bundle = key_factory.getBundlePEM();
   std::cout << bundle << std::endl;
