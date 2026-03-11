@@ -16,6 +16,13 @@ namespace pkicxx{
       EVP_PKEY_CTX_free(ctx);
       return {};
     }
+
+    if (EVP_PKEY_CTX_set_rsa_padding(ctx, RSA_PKCS1_OAEP_PADDING) <= 0)
+    {
+      EVP_PKEY_CTX_free(ctx);
+      return {};
+    }
+    
     size_t len;
     if (EVP_PKEY_encrypt(ctx,NULL,&len,payload.data(),payload.size())<=0)
     {
@@ -43,7 +50,7 @@ namespace pkicxx{
       return {};
     }
 
-    //if (EVP_PKEY_CTX_set_rsa_padding(ctx, RSA_PKCS1_OAEP_PADDING) <= 0){ return{};}
+    if (EVP_PKEY_CTX_set_rsa_padding(ctx, RSA_PKCS1_OAEP_PADDING) <= 0){ return{};}
 
     size_t len;
     if (EVP_PKEY_decrypt(ctx,NULL,&len,payload.data(),payload.size())<=0)

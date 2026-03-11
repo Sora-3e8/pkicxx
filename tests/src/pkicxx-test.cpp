@@ -109,14 +109,14 @@ int Decrypt_test()
   std::vector<unsigned char> res = pkicxx::pki::encrypt(key,payload);
   std::cout << "Original:" << std::endl;
   std::cout << my_message << std::endl;
-  std::cout << "Hex::" << std::endl;
+  std::cout << "Hex:" << std::endl;
   std::cout << pkicxx::DERhexStr(payload) << std::endl;
   std::cout << "Encrypted:" << std::endl;
   std::cout << pkicxx::DERhexStr(res) << std::endl;
   std::vector<unsigned char> res_decrypted = pkicxx::pki::decrypt(key,res);
   std::cout << "Res decrypted:"<< std::endl;
   std::cout << res_decrypted.data() << std::endl;
-  if(std::string((char*)res_decrypted.data()) != std::string((char*)res_decrypted.data())){return 1;}
+  if(std::string((char*)my_message.data()) != std::string((char*)res_decrypted.data())){return 1;}
     
   return 0;
 }
