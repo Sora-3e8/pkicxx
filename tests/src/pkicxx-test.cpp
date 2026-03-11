@@ -99,6 +99,28 @@ int Encrypt_test()
   return 0;
 }
 
+int Decrypt_test()
+{
+  pkicxx:: pkic key;
+  key.generate_keypair(2048);
+  std::string my_message = "Hewwo I am secret ^.^";
+  std::vector<unsigned char> payload(my_message.size());
+  std::copy(my_message.data(),my_message.data()+my_message.size(),payload.data());
+  std::vector<unsigned char> res = pkicxx::pki::encrypt(key,payload);
+  std::cout << "Original:" << std::endl;
+  std::cout << my_message << std::endl;
+  std::cout << "Hex::" << std::endl;
+  std::cout << pkicxx::DERhexStr(payload) << std::endl;
+  std::cout << "Encrypted:" << std::endl;
+  std::cout << pkicxx::DERhexStr(res) << std::endl;
+  std::vector<unsigned char> res_decrypted = pkicxx::pki::decrypt(key,res);
+  std::cout << "Res decrypted:"<< std::endl;
+  std::cout << res_decrypted.data() << std::endl;
+  if(std::string((char*)res_decrypted.data()) != std::string((char*)res_decrypted.data())){return 1;}
+    
+  return 0;
+}
+
 int bundlePEM_test()
 {
   pkicxx::pkic key_factory;
@@ -120,6 +142,7 @@ std::map<std::string,std::function<int()>> handler =
   {"--privDER", &privDER_test},
   {"--pubDER", &pubDER_test},
   {"--encrypt", &Encrypt_test},
+  {"--decrypt", &Decrypt_test}
   
 };
 

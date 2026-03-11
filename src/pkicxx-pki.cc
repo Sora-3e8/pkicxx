@@ -33,9 +33,34 @@ namespace pkicxx{
     return encrypted;
   }
 
-  void pki::decrypt()
+  std::vector<unsigned char> pki::decrypt(pkic& key,std::vector<unsigned char>& payload)
   {
+    EVP_PKEY_CTX *ctx = EVP_PKEY_CTX_new(key.key_container,NULL);
     
+    if (EVP_PKEY_decrypt_init(ctx) <= 0)
+    {
+      EVP_PKEY_CTX_free(ctx);
+      return {};
+    }
+
+    //if (EVP_PKEY_CTX_set_rsa_padding(ctx, RSA_PKCS1_OAEP_PADDING) <= 0){ return{};}
+
+    size_t len;
+    if (EVP_PKEY_decrypt(ctx,NULL,&len,payload.data(),payload.size())<=0)
+    {
+      EVP_PKEY_CTX_free(ctx);
+      return {};
+    }
+    
+    std::vector<unsigned char> decrypted(len);
+    if(EVP_PKEY_decrypt(ctx,decrypted.data(),&len,payload.data(),payload.size())<=0)
+    {
+      EVP_PKEY_CTX_free(ctx);
+      return {};
+    }
+    
+    EVP_PKEY_CTX_free(ctx);
+    return decrypted;
   }
 
   void pki::sign()

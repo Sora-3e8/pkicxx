@@ -14,6 +14,7 @@ add_test(NAME "PEM privkey string" COMMAND pkicxx-test --privPEM)
 add_test(NAME "PEM pubkey string" COMMAND pkicxx-test --pubPEM)
 add_test(NAME "PEM bundle string" COMMAND pkicxx-test --bundlePEM)
 add_test(NAME "Encrypt" COMMAND pkicxx-test --encrypt)
+add_test(NAME "Decrypt" COMMAND pkicxx-test --decrypt)
 add_custom_command(TARGET pkicxx-test POST_BUILD COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure)
 
 
