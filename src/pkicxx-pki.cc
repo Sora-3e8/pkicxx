@@ -65,6 +65,7 @@ namespace pkicxx{
       EVP_PKEY_CTX_free(ctx);
       return {};
     }
+    decrypted.resize(len);
     
     EVP_PKEY_CTX_free(ctx);
     return decrypted;

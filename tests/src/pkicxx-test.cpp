@@ -114,11 +114,13 @@ int Decrypt_test()
   std::cout << "Encrypted:" << std::endl;
   std::cout << pkicxx::DERhexStr(res) << std::endl;
   std::vector<unsigned char> res_decrypted = pkicxx::pki::decrypt(key,res);
-  std::cout << "Res decrypted:"<< std::endl;
+  std::cout << "Res decrypted hex:"<< std::endl;
+  std::cout << pkicxx::DERhexStr(res_decrypted) << std::endl;
+  std::cout << "Res decrypted:" << std::endl;
   std::cout << res_decrypted.data() << std::endl;
-  if(std::string((char*)my_message.data()) != std::string((char*)res_decrypted.data())){return 1;}
-    
-  return 0;
+  if(pkicxx::DERhexStr(payload)==pkicxx::DERhexStr(res_decrypted)) return 0;
+  
+  return 1;
 }
 
 int bundlePEM_test()
