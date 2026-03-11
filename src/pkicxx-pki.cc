@@ -5,12 +5,6 @@
 #include "pkicxx-pkic.hpp"
 
 namespace pkicxx{
-  pki::pki(){}
-  
-  pki::~pki()
-  {
-    
-  }
   
   std::vector<unsigned char> pki::encrypt(pkic& key,std::vector<unsigned char>& payload)
   {   

@@ -84,11 +84,10 @@ int Encrypt_test()
 {
   pkicxx::pkic key_factory;
   key_factory.generate_keypair(2048);
-  pkicxx::pki toolchain;
   std::string my_message = "Hewwo I am secret ^.^";
   std::vector<unsigned char> payload(my_message.size());
   std::copy(my_message.data(),my_message.data()+my_message.size(),payload.data());
-  std::vector<unsigned char> res = toolchain.encrypt(key_factory,payload);
+  std::vector<unsigned char> res = pkicxx::pki::encrypt(key_factory,payload);
   std::cout << "Original:" << std::endl;
   std::cout << my_message << std::endl;
   std::cout << "Hex::" << std::endl;
