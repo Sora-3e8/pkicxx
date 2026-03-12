@@ -6,14 +6,14 @@
 #include "pkicxx-pkic.hpp"
 #include "pkicxx.hpp"
 
-int keyfactoryInit_test()
+int keyfactoryInit_test(char* argv[], int argc)
 {
   pkicxx::pkic key_factory;
   
   return 0;
 }
 
-int keypairGen_test()
+int keypairGen_test(char* argv[], int argc)
 {
   pkicxx::pkic key_factory;
   key_factory.generate_keypair(2048);
@@ -21,7 +21,7 @@ int keypairGen_test()
   return 0;
 }
 
-int keypairRegen_test()
+int keypairRegen_test(char* argv[], int argc)
 {
   pkicxx::pkic key_factory;
   key_factory.generate_keypair(2048);
@@ -31,7 +31,7 @@ int keypairRegen_test()
   
 }
 
-int keypairMultigen_test()
+int keypairMultigen_test(char* argv[], int argc)
 {
   pkicxx::pkic key_factory;
   
@@ -43,7 +43,7 @@ int keypairMultigen_test()
   return 0;
 }
 
-int privPEM_test()
+int privPEM_test(char* argv[], int argc)
 {
   pkicxx::pkic key_factory;
   key_factory.generate_keypair(2048);
@@ -52,7 +52,7 @@ int privPEM_test()
   return 0;
 }
 
-int pubPEM_test()
+int pubPEM_test(char* argv[], int argc)
 {
   pkicxx::pkic key_factory;
   key_factory.generate_keypair(2048);
@@ -61,7 +61,7 @@ int pubPEM_test()
   return 0;
 }
 
-int privDER_test()
+int privDER_test(char* argv[], int argc)
 {
   pkicxx::pkic key_factory;
   key_factory.generate_keypair(2048);
@@ -70,7 +70,7 @@ int privDER_test()
   return 0;
 }
 
-int pubDER_test()
+int pubDER_test(char* argv[], int argc)
 {
   pkicxx::pkic key_factory;
   key_factory.generate_keypair(2048);
@@ -80,7 +80,7 @@ int pubDER_test()
   return 0;
 }
 
-int Encrypt_test()
+int Encrypt_test(char* argv[], int argc)
 {
   pkicxx::pkic key_factory;
   key_factory.generate_keypair(2048);
@@ -99,7 +99,7 @@ int Encrypt_test()
   return 0;
 }
 
-int Decrypt_test()
+int Decrypt_test(char* argv[], int argc)
 {
   pkicxx:: pkic key;
   key.generate_keypair(2048);
@@ -123,7 +123,7 @@ int Decrypt_test()
   return 1;
 }
 
-int bundlePEM_test()
+int bundlePEM_test(char* argv[], int argc)
 {
   pkicxx::pkic key_factory;
   key_factory.generate_keypair(2048);
@@ -132,7 +132,19 @@ int bundlePEM_test()
   return 0;
 }
 
-std::map<std::string,std::function<int()>> handler =
+int debugPass(char* argv[], int argc)
+{
+  std::cout << "Arg pass: ";
+  for(int i=0;i<argc;i++)
+  {
+    std::cout << argv[i];
+  }
+  std::cout << std::endl;
+
+  return 0;
+}
+
+std::map<std::string,std::function<int(char* argv[],int argc)>> handler =
 {
   {"--factoryInit", &keyfactoryInit_test},
   {"--pairGen", &keypairGen_test},
@@ -144,9 +156,10 @@ std::map<std::string,std::function<int()>> handler =
   {"--privDER", &privDER_test},
   {"--pubDER", &pubDER_test},
   {"--encrypt", &Encrypt_test},
-  {"--decrypt", &Decrypt_test}
-  
+  {"--decrypt", &Decrypt_test},
+  {"--debugTest", &debugPass}
 };
+
 
 void printUsage(std::string bin_name)
 {
@@ -162,7 +175,7 @@ void printUsage(std::string bin_name)
 
 int main(int argc, char* argv[])
 {
-  if ((argc-1) !=1)
+  if ((argc-1) < 1)
   {
     std::cout << "Invalid usage." << std::endl;
     printUsage("pkicxx-test");
@@ -176,5 +189,5 @@ int main(int argc, char* argv[])
     return 1;
   }
   
-  return handler[argv[1]]();
+  return handler[argv[1]](argv,argc);
 }
