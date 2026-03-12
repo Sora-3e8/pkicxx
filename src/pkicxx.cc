@@ -4,7 +4,7 @@
 
 namespace pkicxx
 {
-  std::string DERhexStr(const std::vector<unsigned char> &DER)
+  std::string hexStr(const std::vector<unsigned char> &DER)
   {
     int counter = 0;
     std::stringstream hex_str;

@@ -66,7 +66,7 @@ int privDER_test()
   pkicxx::pkic key_factory;
   key_factory.generate_keypair(2048);
   std::vector<unsigned char> priv_der= key_factory.getPrivDER();
-  std::cout << pkicxx::DERhexStr(priv_der) << std::endl;
+  std::cout << pkicxx::hexStr(priv_der) << std::endl;
   return 0;
 }
 
@@ -75,7 +75,7 @@ int pubDER_test()
   pkicxx::pkic key_factory;
   key_factory.generate_keypair(2048);
   std::vector<unsigned char> pub_der= key_factory.getPubDER();
-  std::cout << pkicxx::DERhexStr(pub_der) << std::endl;
+  std::cout << pkicxx::hexStr(pub_der) << std::endl;
   
   return 0;
 }
@@ -91,10 +91,10 @@ int Encrypt_test()
   std::cout << "Original:" << std::endl;
   std::cout << my_message << std::endl;
   std::cout << "Hex::" << std::endl;
-  std::cout << pkicxx::DERhexStr(payload) << std::endl;
+  std::cout << pkicxx::hexStr(payload) << std::endl;
   std::cout << "Encrypted:" << std::endl;
-  std::cout << pkicxx::DERhexStr(res) << std::endl;
-  if (pkicxx::DERhexStr(payload)==pkicxx::DERhexStr(res)||res.size()==0) return 1;
+  std::cout << pkicxx::hexStr(res) << std::endl;
+  if (pkicxx::hexStr(payload)==pkicxx::hexStr(res)||res.size()==0) return 1;
   
   return 0;
 }
@@ -110,15 +110,15 @@ int Decrypt_test()
   std::cout << "Original:" << std::endl;
   std::cout << my_message << std::endl;
   std::cout << "Hex:" << std::endl;
-  std::cout << pkicxx::DERhexStr(payload) << std::endl;
+  std::cout << pkicxx::hexStr(payload) << std::endl;
   std::cout << "Encrypted:" << std::endl;
-  std::cout << pkicxx::DERhexStr(res) << std::endl;
+  std::cout << pkicxx::hexStr(res) << std::endl;
   std::vector<unsigned char> res_decrypted = pkicxx::pki::decrypt(key,res);
   std::cout << "Res decrypted hex:"<< std::endl;
-  std::cout << pkicxx::DERhexStr(res_decrypted) << std::endl;
+  std::cout << pkicxx::hexStr(res_decrypted) << std::endl;
   std::cout << "Res decrypted:" << std::endl;
   std::cout << res_decrypted.data() << std::endl;
-  if(pkicxx::DERhexStr(payload)==pkicxx::DERhexStr(res_decrypted)) return 0;
+  if(pkicxx::hexStr(payload)==pkicxx::hexStr(res_decrypted)) return 0;
   
   return 1;
 }
