@@ -167,6 +167,11 @@ int loadPubPEM(char* argv[], int argc)
   
   keyc_synth.generate_keypair(2048);
   keyc_loaded.loadPEMStr(keyc_synth.getPubPEM().c_str());
+  std::cout << "Pub synth: " << std::endl;
+  std::cout << pkicxx::hexStr(keyc_synth.getPubDER()) << std::endl;
+  std::cout << "Pub loaded: " << std::endl;
+  std::cout << pkicxx::hexStr(keyc_loaded.getPubDER()) << std::endl;
+
   if(pkicxx::hexStr(keyc_synth.getPubDER()) != pkicxx::hexStr(keyc_loaded.getPubDER())) return 1;
 
   return 0; 
@@ -179,6 +184,9 @@ int loadBundlePEM(char* argv[], int argc)
   
   keyc_synth.generate_keypair(2048);
   keyc_loaded.loadPEMStr(keyc_synth.getBundlePEM().c_str());
+  std::cout << "Pub loaded: " << std::endl;
+  std::cout << pkicxx::hexStr(keyc_loaded.getPubDER()) << std::endl;
+
   if(pkicxx::hexStr(keyc_synth.getPrivDER()) != pkicxx::hexStr(keyc_loaded.getPrivDER())) return 1;
   if(pkicxx::hexStr(keyc_synth.getPubDER()) != pkicxx::hexStr(keyc_loaded.getPubDER())) return 1;
 
