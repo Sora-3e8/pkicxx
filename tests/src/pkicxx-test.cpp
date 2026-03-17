@@ -48,6 +48,7 @@ int getPrivDER(char* argv[], int argc)
   key_factory.generate_keypair(2048);
   std::vector<unsigned char> priv_der= key_factory.getPrivDER();
   std::cout << pkicxx::hexStr(priv_der) << std::endl;
+  
   return 0;
 }
 

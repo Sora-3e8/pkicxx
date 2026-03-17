@@ -20,27 +20,32 @@ namespace pkicxx{
       
     if (EVP_PKEY_encrypt_init(ctx) <= 0)
     {
+      int _err = ERR_get_error();
       EVP_PKEY_CTX_free(ctx);
-      return {};
+      throw std::runtime_error("[pkicxx::pki::ecrypt] Encryption context init failed.\nError "+std::to_string(_err)+", "+ERR_reason_error_string(_err));
     }
 
     if (EVP_PKEY_CTX_set_rsa_padding(ctx, RSA_PKCS1_OAEP_PADDING) <= 0)
     {
+      int _err = ERR_get_error();
       EVP_PKEY_CTX_free(ctx);
-      return {};
+      throw std::runtime_error("[pkicxx::pki::encrypt] Encryption context init failed.\nError "+std::to_string(_err)+", "+ERR_reason_error_string(_err));
     }
     
     size_t len;
     if (EVP_PKEY_encrypt(ctx,NULL,&len,payload.data(),payload.size())<=0)
     {
+      int _err = ERR_get_error();
       EVP_PKEY_CTX_free(ctx);
-      return {};
+      throw std::runtime_error("[pkicxx::pki::encrypt] Encryption failed.\nError "+std::to_string(_err)+", "+ERR_reason_error_string(_err));
     }
+    
     std::vector<unsigned char> encrypted(len);
     if(EVP_PKEY_encrypt(ctx,encrypted.data(),&len,payload.data(),payload.size())<=0)
     {
+      int _err = ERR_get_error();
       EVP_PKEY_CTX_free(ctx);
-      return {};
+      throw std::runtime_error("[pkicxx::pki::encrypt] Encryption failed.\nError "+std::to_string(_err)+", "+ERR_reason_error_string(_err));
     }
 
     EVP_PKEY_CTX_free(ctx);
@@ -59,8 +64,9 @@ namespace pkicxx{
     
     if (EVP_PKEY_decrypt_init(ctx) <= 0)
     {
+      int _err = ERR_get_error();
       EVP_PKEY_CTX_free(ctx);
-      return {};
+      throw std::runtime_error("[pkicxx::pki::decrypt] Decryption context init failed.\nError "+std::to_string(_err)+", "+ERR_reason_error_string(_err));
     }
 
     if (EVP_PKEY_CTX_set_rsa_padding(ctx, RSA_PKCS1_OAEP_PADDING) <= 0){ return{};}
@@ -68,19 +74,22 @@ namespace pkicxx{
     size_t len;
     if (EVP_PKEY_decrypt(ctx,NULL,&len,payload.data(),payload.size())<=0)
     {
+      int _err = ERR_get_error();
       EVP_PKEY_CTX_free(ctx);
-      return {};
+      throw std::runtime_error("[pkicxx::pki::decrypt] Decryption failed.\nError "+std::to_string(_err)+", "+ERR_reason_error_string(_err));
     }
     
     std::vector<unsigned char> decrypted(len);
     if(EVP_PKEY_decrypt(ctx,decrypted.data(),&len,payload.data(),payload.size())<=0)
     {
+      int _err = ERR_get_error();
       EVP_PKEY_CTX_free(ctx);
-      return {};
+      throw std::runtime_error("[pkicxx::pki::decrypt] Decryption failed.\nError "+std::to_string(_err)+", "+ERR_reason_error_string(_err));
     }
-    decrypted.resize(len);
     
+    decrypted.resize(len);
     EVP_PKEY_CTX_free(ctx);
+    
     return decrypted;
   }
 
