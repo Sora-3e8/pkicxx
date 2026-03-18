@@ -29,7 +29,7 @@ namespace pkicxx
     if(key_container==NULL)
     {
       unsigned long _err = ERR_get_error();    
-      std::cerr << "[pkicxx::pkic::loadPrivDER] Failed to load privkey from DER.\n"<<"Error "<<_err<<", "<<ERR_reason_error_string(_err)<<std::endl;
+      throw std::runtime_error( "[pkicxx::pkic::loadPrivDER] Failed to load privkey from DER.\nError "+std::to_string(_err)+", "+ERR_reason_error_string(_err));
     }  
   }
   
@@ -40,7 +40,7 @@ namespace pkicxx
     if(key_container==NULL)
     {
       unsigned long _err = ERR_get_error();    
-      std::cerr << "[pkicxx::pkic::loadPrivDER] Failed to load privkey from DER.\n"<<"Error "<<_err<<", "<<ERR_reason_error_string(_err)<<std::endl;
+      throw std::runtime_error( "[pkicxx::pkic::loadPubDER] Failed to load privkey from DER.\nError "+std::to_string(_err)+", "+ERR_reason_error_string(_err));
     }
   }
   
@@ -56,7 +56,7 @@ namespace pkicxx
     if (key_len < 0)
     {
       unsigned long _err = ERR_get_error();
-      std::cerr<<"[pkicxx::pkic::getPrivDER] Could not get DER of the pubkey.\n"<<"Error "<<_err<<", "<<ERR_reason_error_string(_err)<< std::endl;
+      std::cerr<<"[pkicxx::pkic::getPrivDER] Could not get DER of the privkey.\n"<<"Error "<<_err<<", "<<ERR_reason_error_string(_err)<< std::endl;
       return {};     
     }
 
@@ -77,7 +77,7 @@ namespace pkicxx
 
     int key_len = i2d_PublicKey(key_container, NULL);
 
-    if (key_len < 0)
+    if (key_len <= 0)
     {
       unsigned long _err = ERR_get_error();
       std::cerr<<"[pkicxx::pkic::getPubDER] Could not get DER of the pubkey.\n"<<"Error "<<_err<<", "<<ERR_reason_error_string(_err)<< std::endl;
@@ -110,7 +110,7 @@ namespace pkicxx
     if(tmp_key != nullptr) key_container=tmp_key;
     if(tmp_key == nullptr) tmp_key = PEM_read_bio_PUBKEY(bio, NULL,NULL,NULL);
     if(tmp_key != nullptr) key_container = tmp_key;    
-    if(tmp_key == nullptr) std::cerr << "[pkicxx::pkic::importPEM] Failed to read PEM file, \ncheck if the file you provided is a valid PEM file." << std::endl;
+    if(tmp_key == nullptr) std::cerr << "[pkicxx::pkic::loadPEMStr] Failed to read PEM, \ncheck if the provided PEM string is valid." << std::endl;
     
     BIO_free(bio);
   }
@@ -151,11 +151,23 @@ namespace pkicxx
 
     if(PEM_write_bio_PrivateKey(bio,key_container,NULL,NULL,0,NULL,NULL)!=1)
     {
+      unsigned long _err = ERR_get_error();
       BIO_free(bio);
+      std::cerr<<"[pkicxx::pkic::getPrivPEM] Could not retrieve PEM.\n"<<"Error "<<_err<<", "<<ERR_reason_error_string(_err)<<std::endl;
+      
       return "";       
     }
     
     int len = BIO_pending(bio);
+    if(len<=0)
+    {
+      unsigned long _err = ERR_get_error();
+      BIO_free(bio);
+      std::cerr<<"[pkicxx::pkic::getPrivPEM] Could not retrieve PEM.\n"<<"Error "<<_err<<", "<<ERR_reason_error_string(_err)<<std::endl;
+      
+      return "";       
+    }
+    
     std::string pem_str(len,'\0');
     BIO_read(bio,&pem_str[0],len);
     BIO_free(bio);
@@ -181,11 +193,23 @@ namespace pkicxx
 
     if(PEM_write_bio_PUBKEY(bio,key_container)!=1)
     {
+      unsigned long _err = ERR_get_error();
       BIO_free(bio);
+      std::cerr<<"[pkicxx::pkic::getPubPEM] Could not retrieve PEM.\n"<<"Error "<<_err<<", "<<ERR_reason_error_string(_err)<<std::endl;
+      
       return "";       
     }
     
     int len = BIO_pending(bio);
+    if(len<=0)
+    {
+      unsigned long _err = ERR_get_error();
+      BIO_free(bio);
+      std::cerr<<"[pkicxx::pkic::getPubPEM] Could not retrieve PEM.\n"<<"Error "<<_err<<", "<<ERR_reason_error_string(_err)<<std::endl;
+      
+      return "";       
+    }
+    
     std::string pem_str(len,'\0');
     BIO_read(bio,&pem_str[0],len);
     BIO_free(bio);
