@@ -3,9 +3,10 @@
 
 #include "pkicxx-pkic.hpp"
 #include "pkicxx-pki.hpp"
+#include "pkicxx-hash.hpp"
 
 namespace pkicxx
-{
+{ 
   std::string hexStr(const std::vector<unsigned char> &DER);
   class pkic;
   class pki;

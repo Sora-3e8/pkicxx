@@ -6,7 +6,8 @@
 #include <openssl/err.h>
 #include <stdexcept>
 
-namespace pkicxx{
+namespace pkicxx
+{
   
   std::vector<unsigned char> pki::encrypt(pkic& key,std::vector<unsigned char>& payload)
   {
@@ -93,8 +94,22 @@ namespace pkicxx{
     return decrypted;
   }
 
-  void pki::sign()
+  std::vector<unsigned char> pki::sign(pkic& key,std::vector<unsigned char> &buffer)
   {
+    if(key.key_container == nullptr)
+    {
+      throw std::logic_error("[pkicxx::pki::sign] The key container was not initialized.");
+    }
     
+    EVP_PKEY_CTX *ctx = EVP_PKEY_CTX_new(key.key_container,NULL);
+    if(!ctx) return {};
+    if (EVP_PKEY_sign_init(ctx) <= 0)
+    {
+      int _err = ERR_get_error();
+      EVP_PKEY_CTX_free(ctx);
+      throw std::runtime_error("[pkicxx::pki::sign] Could not initialize signature.\nError "+std::to_string(_err)+", "+ERR_reason_error_string(_err));
+    }
+    EVP_PKEY_CTX_free(ctx);
+    return {};
   }
 }

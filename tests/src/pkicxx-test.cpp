@@ -274,11 +274,11 @@ int Encrypt_test(char* argv[], int argc)
 
 int Decrypt_test(char* argv[], int argc)
 {
-  pkicxx:: pkic key;
+  pkicxx::pkic key;
   key.generate_keypair(2048);
   std::string my_message = "Hewwo I am secret ^.^";
   std::vector<unsigned char> payload(my_message.size());
-  std::copy(my_message.data(),my_message.data()+my_message.size(),payload.data());
+  std::copy(my_message.data(),my_message.data()+my_message.size(),payload.data()); 
   std::vector<unsigned char> res = pkicxx::pki::encrypt(key,payload);
   std::cout << "Original:" << std::endl;
   std::cout << my_message << std::endl;
@@ -294,6 +294,17 @@ int Decrypt_test(char* argv[], int argc)
   if(pkicxx::hexStr(payload)==pkicxx::hexStr(res_decrypted)) return 0;
   
   return 1;
+}
+
+int hashTest(char* argv[], int argc)
+{
+
+  std::string my_message = "Hewwo I am secret ^.^";
+  std::vector<unsigned char> payload(my_message.size());
+  std::copy(my_message.data(),my_message.data()+my_message.size(),payload.data()); 
+  std::vector<unsigned char> hashed_payload = pkicxx::hash(payload,pkicxx::hashAlg::SHA256);
+  std::cout<<pkicxx::hexStr(hashed_payload)<<std::endl;
+  return 0;
 }
 
 int debugPass(char* argv[], int argc)
@@ -332,6 +343,7 @@ std::map<std::string,std::function<int(char* argv[],int argc)>> handler =
   {"--exportBundlePEM", &exportBundlePEM},
   {"--encrypt", &Encrypt_test},
   {"--decrypt", &Decrypt_test},
+  {"--hash", &hashTest},
   {"--debugTest", &debugPass}
 };
 
