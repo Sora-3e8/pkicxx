@@ -3,6 +3,7 @@
 #include <functional>
 #include <iostream>
 #include <vector>
+#include "pkicxx-hashtypes.hpp"
 #include "pkicxx.hpp"
 
 int pkicInit(char* argv[], int argc)
@@ -316,9 +317,26 @@ int signTest(char* argv[], int argc)
   std::vector<unsigned char> payload(my_message.size());
   std::copy(my_message.data(),my_message.data()+my_message.size(),payload.data()); 
   std::vector<unsigned char> signature = pkicxx::pki::sign(key,payload,pkicxx::hashAlg::SHA256);
+  std::cout << "Signature hex:" << std::endl;
   std::cout<<pkicxx::hexStr(signature)<<std::endl;
   return 0;
 }
+
+int verifyTest(char* argv[], int argc)
+{
+  pkicxx::pkic key;
+  key.generate_keypair(2048);
+  std::string my_message = "Hewwo I am signed ^.^";
+  std::vector<unsigned char> payload(my_message.size());
+  std::copy(my_message.data(),my_message.data()+my_message.size(),payload.data());
+  std::vector<unsigned char> signature = pkicxx::pki::sign(key,payload,pkicxx::hashAlg::SHA256);
+  std::cout << "Signature hex:" << std::endl;
+  std::cout<<pkicxx::hexStr(signature)<<std::endl;
+  bool res = pkicxx::pki::verify(key, signature, payload,pkicxx::hashAlg::SHA256);
+
+  return res;
+}
+
 
 int debugPass(char* argv[], int argc)
 {
@@ -358,6 +376,7 @@ std::map<std::string,std::function<int(char* argv[],int argc)>> handler =
   {"--decrypt", &Decrypt_test},
   {"--hash", &hashTest},
   {"--sign", &signTest},
+  {"--verify", &verifyTest},
   {"--debugTest", &debugPass}
 };
 

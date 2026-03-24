@@ -15,6 +15,7 @@ namespace pkicxx
       static std::vector<unsigned char> encrypt(pkic& key,std::vector<unsigned char>& payload);
       static std::vector<unsigned char> decrypt(pkic& key,std::vector<unsigned char>& payload);
       static std::vector<unsigned char> sign(pkic& key, std::vector<unsigned char> &buffer, hashAlg alg);
+      static bool verify(pkic& key, std::vector<unsigned char>& sig,std::vector<unsigned char>& buffer, hashAlg alg);
 
     private:
       pki(){}

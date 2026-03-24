@@ -7,6 +7,7 @@
 #include "pkicxx-pki.hpp"
 #include <openssl/err.h>
 #include <stdexcept>
+#include <string>
 
 namespace pkicxx
 {
@@ -139,6 +140,7 @@ namespace pkicxx
     {
       int _err = ERR_get_error();
       EVP_PKEY_CTX_free(ctx);
+      EVP_SIGNATURE_free(alg_sig);
       throw std::runtime_error("[pkicxx::pki::sign] Could not init signature algorithm.\nError "+std::to_string(_err)+", "+ERR_reason_error_string(_err));
     }
     
@@ -164,4 +166,57 @@ namespace pkicxx
     
     return signature;
   }
+  
+  bool pki::verify(pkic& key, std::vector<unsigned char>&sig, std::vector<unsigned char> &buffer, hashAlg alg)
+  {
+    if(!key.isInitialized())
+    {
+      throw std::logic_error("[pkicxx::pki::verify] The key container was not initialized.");
+    }
+    
+    EVP_PKEY_CTX *ctx = EVP_PKEY_CTX_new(key,NULL);
+    EVP_SIGNATURE *alg_sig = nullptr;
+    alg_sig = EVP_SIGNATURE_fetch(NULL,"RSA",NULL);
+    
+    if(alg_sig == nullptr)
+    {
+      unsigned long _err = ERR_get_error();
+      EVP_PKEY_CTX_free(ctx);
+      throw std::runtime_error("[pkicxx::pki::verfiy] Could not initialize signature algorithm.\nError "+std::to_string(_err)+", "+ERR_reason_error_string(_err));
+    }
+
+    std::vector<unsigned char> hashed_buffer = hash(buffer, alg);
+    
+    if(EVP_PKEY_verify_init_ex2(ctx,alg_sig,NULL)<=0)
+    {
+      unsigned long _err = ERR_get_error();
+      EVP_SIGNATURE_free(alg_sig);
+      EVP_PKEY_CTX_free(ctx);
+      throw std::runtime_error("[pkicxx::pki::verify] Could not init the verify context.\nError "+std::to_string(_err)+", "+ERR_reason_error_string(_err));
+    }
+    
+    if(EVP_PKEY_verify(ctx, sig.data(), sig.size(),hashed_buffer.data(), hashed_buffer.size())<0)
+    {
+      unsigned long _err = ERR_get_error();
+      EVP_SIGNATURE_free(alg_sig);
+      EVP_PKEY_CTX_free(ctx);
+      throw std::runtime_error("[pkicxx::pki::verify] Could not verify.\nError "+std::to_string(_err)+", "+ERR_reason_error_string(_err));
+    }
+
+    int res = EVP_PKEY_verify(ctx, sig.data(), sig.size(), hashed_buffer.data(), hashed_buffer.size());
+
+    if(res < 0)
+    {
+      unsigned long _err = ERR_get_error();
+      EVP_SIGNATURE_free(alg_sig);
+      EVP_PKEY_CTX_free(ctx);
+      throw std::runtime_error("[pkicxx::pki::verify] Could not verify.\nError "+std::to_string(_err)+", "+ERR_reason_error_string(_err));
+    }
+
+    EVP_SIGNATURE_free(alg_sig);
+    EVP_PKEY_CTX_free(ctx);
+
+    return (res==0);
+  }
+  
 }
