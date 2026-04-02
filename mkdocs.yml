@@ -1,0 +1,58 @@
+site_name: Tancrypt docs
+repo_name: Sora-3e8/tancrypt
+repo_url: https://github.com/Sora-3e8/tancrypt
+edit_uri: blob/main/docs/
+nav:
+ - Home: index.md
+ - Installation:
+   - From source: install/source.md
+   #- Packages: install/packages.md
+   - Git submodule: install/git-submodule.md
+ - API:
+   - RSA:
+     - Overview & Operations: api/rsa.md
+     - PKIC: api/pkic.md
+   - Hash: api/hash.md
+   - Helper functions: api/helpers.md
+ - About:
+   - License: license.md
+markdown_extensions:
+ - admonition
+ - pymdownx.details
+ - pymdownx.highlight:
+     anchor_linenums: true
+     line_spans: __span
+     pygments_lang_class: true
+ - pymdownx.inlinehilite
+ - pymdownx.snippets
+ - pymdownx.superfences
+ - attr_list
+theme:
+ icon:
+   repo: fontawesome/brands/github
+ name: material
+ features:
+   - content.code.copy
+ extra_css:
+   - stylesheets/extra.css
+ style:
+ palette:
+  - media: "(prefers-color-scheme)"
+    toggle:
+     icon: material/brightness-auto
+     name: Switch to light mode
+  - media: "(prefers-color-scheme: light)"
+    scheme: default
+    primary: deep purple
+    accent: cyan
+    toggle:
+      icon: material/brightness-7
+      name: Switch to dark mode
+  - media: "(prefers-color-scheme: dark)"
+    scheme: slate
+    primary: deep purple
+    accent: cyan
+    toggle:
+      icon: material/brightness-4
+      name: Switch to system preference    
+     

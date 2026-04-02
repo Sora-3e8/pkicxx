@@ -1,13 +1,13 @@
 #include <openssl/evp.h>
 #include <openssl/err.h>
 #include <stdexcept>
-#include "pkicxx-hash.hpp"
+#include "tancrypt-hash.hpp"
 
-namespace pkicxx
+namespace tancrypt
 {
   std::vector<unsigned char> hash(std::vector<unsigned char> &buffer, hashAlg alg)
   {
-    if(_hashTypeMap().count((int)alg)==0) throw std::invalid_argument("[pkicxx::hash] Invalid hashing algorithm.");
+    if(_hashTypeMap().count((int)alg)==0) throw std::invalid_argument("[tancrypt::hash] Invalid hashing algorithm.");
     EVP_MD *md = EVP_MD_fetch(NULL, _hashTypeMap().at((int)alg), NULL);
 
     if(!md)
@@ -24,12 +24,12 @@ namespace pkicxx
     if(EVP_Q_digest(NULL,_hashTypeMap().at((int)alg),NULL,buffer.data(),buffer.size(),buffer_hashed.data(),&dwritten)!=1)
     {
       unsigned long _err = ERR_get_error();
-      throw std::runtime_error("[pkicxx::hash] Hashing failed.\nError "+std::to_string(_err)+", "+ERR_reason_error_string(_err));
+      throw std::runtime_error("[tancrypt::hash] Hashing failed.\nError "+std::to_string(_err)+", "+ERR_reason_error_string(_err));
     }
 
     if(dwritten!=dlen)
     {
-      throw std::runtime_error("[pkicxx::hash] Critical error, buffer corrupted or incomplete.\nExpected size: "+std::to_string(dlen)+"\nBytes written:"+std::to_string(dwritten));
+      throw std::runtime_error("[tancrypt::hash] Critical error, buffer corrupted or incomplete.\nExpected size: "+std::to_string(dlen)+"\nBytes written:"+std::to_string(dwritten));
     }
 
     return buffer_hashed;

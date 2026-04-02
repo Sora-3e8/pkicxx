@@ -1,9 +1,10 @@
-#ifndef PKICXX_HASH_HPP
-#define PKICXX_HASH_HPP
-#include "pkicxx-hashtypes.hpp"
+#ifndef TANCRYPT_HASH_HPP
+#define TANCRYPT_HASH_HPP
+
+#include "tancrypt-hashtypes.hpp"
 #include <vector>
 
-namespace pkicxx
+namespace tancrypt
 {
   std::vector<unsigned char> hash(std::vector<unsigned char> &buffer, hashAlg alg);
 }

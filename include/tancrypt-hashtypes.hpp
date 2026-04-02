@@ -1,8 +1,9 @@
-#ifndef PKICXX_HASHTYPES_HPP
-#define PKICXX_HASHTYPES_HPP
+#ifndef TANCRYPT_HASHTYPES_HPP
+#define TANCRYPT_HASHTYPES_HPP
 #include <map>
 
-namespace pkicxx{
+namespace tancrypt
+{
   enum class hashAlg : int
   {
      MDC2 = 0,

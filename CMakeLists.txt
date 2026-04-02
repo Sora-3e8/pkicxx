@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.19)
 
-project(pkicxx VERSION 1.0.0 LANGUAGES CXX)
+project(tancrypt VERSION 1.0.0 LANGUAGES CXX)
 
 include(GNUInstallDirs)
 file(GLOB_RECURSE SRC_FILES src/*.cc src/*.cpp)

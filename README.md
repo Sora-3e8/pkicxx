@@ -1,16 +1,17 @@
-# PKICXX
-- Simple PKI library C++ library based on OpenSSL
-- Wraps around the EVP C api to allow easy keypair generation
+# Tancrypt
+- Simple cryptographic C++ library based on OpenSSL
+- Wraps around the EVP C api to allow easy keypair generation with simplfied API
+- Detailed documentation: 
 
-# This library is still WIP
+> [!CAUTION]
+> This library is still WIP
 
-# Planned feature progress
-- [x] Keypair generation
-- [x] PEM string output
-- [x] DER output
-- [x] PEM string input
-- [x] PEM file export
-- [x] PEM file load
-- [x] RSA Encrypt
-- [x] RSA Decrypt
-- [ ] RSA Sign 
+# Build
+```bash
+```
+
+# Planned features progress
+- [x] RSA key container and management
+- [x] Basic RSA operationas [encrypt,decrypt,sign and verify]
+- [ ] Custom data buffer
+- [ ] AES  
