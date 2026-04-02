@@ -10,7 +10,7 @@ git clone https://github.com/Sora-3e8/tancrypt
 Now either add it as subdirectory into your cmake or build manually using:
 ```bash
 cd lib/
-git clone https://github.com/Sora-3e8/tancrypt && cd pkicxx/build
+git clone https://github.com/Sora-3e8/tancrypt && cd tancrypt/build
 cmake -DCMAKE_BUILD_TYPE=Release .. && cmake --build .
 ```
 
@@ -20,7 +20,7 @@ You can install the library to your system and keep it as shared lib.</br>
 To install use following commands:
 
 ```bash
-git clone https://github.com/Sora-3e8/tancrypt && cd pkicxx/build
+git clone https://github.com/Sora-3e8/tancrypt && cd tancrypt/build
 cmake -DCMAKE_BUILD_TYPE=Release .. && cmake --build .
 sudo cmake --install .
 ```
