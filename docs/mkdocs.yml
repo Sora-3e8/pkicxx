@@ -1,5 +1,7 @@
 site_name: Tancrypt docs
 repo_name: Sora-3e8/tancrypt
+docs_dir: src/
+site_dir: site/
 repo_url: https://github.com/Sora-3e8/tancrypt
 edit_uri: blob/main/docs/
 nav:
