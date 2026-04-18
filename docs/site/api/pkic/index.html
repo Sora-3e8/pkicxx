@@ -449,6 +449,117 @@
                 
   
   
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AES
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    AES
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview & operations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../keyc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AES keyc
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -462,10 +573,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
         
           
-          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
             
   
   
@@ -483,8 +594,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3_1">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -589,15 +700,26 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#constructor" class="md-nav__link">
+  <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        constructor
+        Overview
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="constructor">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#constructor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Constructor">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -989,15 +1111,26 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#constructor" class="md-nav__link">
+  <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        constructor
+        Overview
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="constructor">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#constructor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Constructor">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1221,6 +1354,7 @@
 
 
 <h1 id="pkic">PKIC</h1>
+<h2 id="overview">Overview</h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Please note that newly created instance of <code class="language-cpp highlight"><span class="n">RSA</span><span class="o">::</span><span class="n">pkic</span></code> is blank<br />
@@ -1230,18 +1364,30 @@ and needs to be initialized properly before it can be used.</p>
 The PKIC by itself does not provide any cryptographic operations, it only provides the keys.
 <code class="language-cpp highlight"><span class="k">class</span><span class="w"> </span><span class="nc">pkic</span></code> extends the <code class="language-cpp highlight"><span class="k">namespace</span><span class="w"> </span><span class="nn">RSA</span></code> and is automatically included in the RSA header.</p>
 <p>If you wish to merely generate keypairs or load keypairs and manage them, you can include <code>tancrypt-pkic.hpp</code>
-as a standalone header.</p>
-<h2 id="constructor">constructor</h2>
+as a standalone header.
+</br>
+</br>
+</br>
+</br></p>
+<h2 id="constructor">Constructor</h2>
 <h3 id="tancryptrsapkic">tancrypt::RSA::pkic()</h3>
 <ul>
-<li><strong>Parameters:</strong></br></li>
+<li><strong>Parameters:</strong>
+</br>
+</br>
+</br>
+</br></li>
 </ul>
 <h4 id="initialization-methods">Initialization methods</h4>
 <ul>
 <li>Keypair generation</li>
 <li>Load from DER</li>
 <li>Load from PEM string</li>
-<li>Load from PEM file</li>
+<li>Load from PEM file
+</br>
+</br>
+</br>
+</br></li>
 </ul>
 <h2 id="der-loaders">DER loaders</h2>
 <p>DER loaders, class methods that load RSA keys from DER data buffers</p>
@@ -1261,7 +1407,11 @@ as a standalone header.</p>
 <li><code class="language-cpp highlight"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">DER</span></code> - Public key data buffer in with DER format</li>
 </ul>
 </li>
-<li><strong>Returns:</strong></li>
+<li><strong>Returns:</strong>
+</br>
+</br>
+</br>
+</br></li>
 </ul>
 <h2 id="pem-loaders">PEM loaders</h2>
 <h3 id="loadpemstr"><code class="language-cpp highlight"><span class="n">loadPEMStr</span><span class="p">()</span></code></h3>
@@ -1272,7 +1422,11 @@ as a standalone header.</p>
 <h3 id="importpem"><code class="language-cpp highlight"><span class="n">importPEM</span><span class="p">()</span></code></h3>
 <ul>
 <li><strong>Parameters:</strong> <code class="language-cpp highlight"><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">file</span></code> - Path to file to load PEM string from</li>
-<li><strong>Returns:</strong></li>
+<li><strong>Returns:</strong>
+</br>
+</br>
+</br>
+</br></li>
 </ul>
 <h2 id="der-getters">DER getters</h2>
 <h3 id="getprivder"><code class="language-cpp highlight"><span class="n">getPrivDER</span><span class="p">()</span></code></h3>
@@ -1287,7 +1441,11 @@ as a standalone header.</p>
 <ul>
 <li><strong>Parameters:</strong></li>
 <li><strong>Returns:</strong><ul>
-<li><code>std::vector&lt;unsigned char&gt;&amp; DER</code> - Public key DER data buffer</li>
+<li><code>std::vector&lt;unsigned char&gt;&amp; DER</code> - Public key DER data buffer
+</br>
+</br>
+</br>
+</br></li>
 </ul>
 </li>
 </ul>
@@ -1312,7 +1470,11 @@ as a standalone header.</p>
 <ul>
 <li><strong>Parameters:</strong></li>
 <li><strong>Returns:</strong><ul>
-<li><code class="language-cpp highlight"><span class="n">std</span><span class="o">::</span><span class="n">string</span></code> fullkey key in form of PEM string</li>
+<li><code class="language-cpp highlight"><span class="n">std</span><span class="o">::</span><span class="n">string</span></code> fullkey key in form of PEM string
+</br>
+</br>
+</br>
+</br></li>
 </ul>
 </li>
 </ul>

@@ -11,6 +11,9 @@ nav:
    #- Packages: install/packages.md
    - Git submodule: install/git-submodule.md
  - API:
+   - AES:
+     - Overview & operations: api/aes.md
+     - AES keyc: api/keyc.md
    - RSA:
      - Overview & Operations: api/rsa.md
      - PKIC: api/pkic.md

@@ -9,7 +9,7 @@
       
       
       
-        <link rel="prev" href="../../install/git-submodule/">
+        <link rel="prev" href="../keyc/">
       
       
         <link rel="next" href="../pkic/">
@@ -449,6 +449,117 @@
                 
   
   
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AES
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    AES
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview & operations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../keyc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AES keyc
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -462,10 +573,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
         
           
-          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
             
   
   
@@ -483,8 +594,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3_1">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1134,7 +1245,10 @@
 <h2 id="overview">Overview</h2>
 <p>Sub-namespace <code class="language-cpp highlight"><span class="n">tancrypt</span><span class="o">::</span><span class="n">RSA</span></code> provides basic cryptographic functions and pulls in <code class="language-cpp highlight"><span class="n">tancrypt</span><span class="o">::</span><span class="n">RSA</span><span class="o">::</span><span class="n">pkic</span></code> as required dependency.</p>
 <p>All provided functions are provided as static stateless functions, this simplifies their usage.</p>
-<p></br></br></p>
+<p></br>
+</br>
+</br>
+</br></p>
 <h2 id="rsaencrypt"><code class="language-cpp highlight"><span class="n">RSA</span><span class="o">::</span><span class="n">encrypt</span></code></h2>
 <h3 id="rsaencryptpkic-keystdvectorunsigned-char-payload"><code class="language-cpp highlight"><span class="n">RSA</span><span class="o">::</span><span class="n">encrypt</span><span class="p">(</span><span class="n">pkic</span><span class="o">&amp;</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">payload</span><span class="p">)</span></code></h3>
 <ul>
@@ -1197,7 +1311,10 @@
 </span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 </span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
-</br></br></p>
+</br>
+</br>
+</br>
+</br></p>
 <h2 id="rsadecrypt"><code class="language-cpp highlight"><span class="n">RSA</span><span class="o">::</span><span class="n">decrypt</span></code></h2>
 <h3 id="rsadecryptpkic-keystdvectorunsigned-char-payload"><code class="language-cpp highlight"><span class="n">RSA</span><span class="o">::</span><span class="n">decrypt</span><span class="p">(</span><span class="n">pkic</span><span class="o">&amp;</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">payload</span><span class="p">)</span></code></h3>
 <ul>
@@ -1272,7 +1389,10 @@
 </span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 </span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
-</br></br></p>
+</br>
+</br>
+</br>
+</br></p>
 <h2 id="rsasign"><code class="language-cpp highlight"><span class="n">RSA</span><span class="o">::</span><span class="n">sign</span></code></h2>
 <h3 id="rsasignpkic-keystdvectorunsigned-char-buffer-hashalg-alg"><code class="language-cpp highlight"><span class="n">RSA</span><span class="o">::</span><span class="n">sign</span><span class="p">(</span><span class="n">pkic</span><span class="o">&amp;</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="n">hashAlg</span><span class="w"> </span><span class="n">alg</span><span class="p">)</span></code></h3>
 <ul>
@@ -1288,7 +1408,7 @@
 </li>
 </ul>
 <h3 id="signature-example">Signature example</h3>
-<div class="language-cpp highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<p><div class="language-cpp highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
@@ -1324,7 +1444,10 @@
 </span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 </span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
-<p></br></br></p>
+</br>
+</br>
+</br>
+</br></p>
 <h2 id="rsaverify"><code>RSA::verify</code></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1345,7 +1468,7 @@
 </li>
 </ul>
 <h3 id="verify-signature-example">Verify signature example</h3>
-<div class="language-cpp highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<p><div class="language-cpp highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
@@ -1375,7 +1498,10 @@
 </span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 </span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
-<p></br></br></p>
+</br>
+</br>
+</br>
+</br></p>
 
 
 

@@ -5,7 +5,10 @@ Sub-namespace `#!cpp tancrypt::RSA` provides basic cryptographic functions and p
 
 All provided functions are provided as static stateless functions, this simplifies their usage.
 
-</br></br>
+</br>
+</br>
+</br>
+</br>
 
 ## `#!cpp RSA::encrypt`
 ### `#!cpp RSA::encrypt(pkic& key,std::vector<unsigned char>& payload)`
@@ -42,7 +45,10 @@ int main()
   return 0;
 }
 ```
-</br></br>
+</br>
+</br>
+</br>
+</br>
 
 ## `#!cpp RSA::decrypt`
 ### `#!cpp RSA::decrypt(pkic& key,std::vector<unsigned char>& payload)`
@@ -86,7 +92,10 @@ int main()
   return 0;
 }
 ```
-</br></br>
+</br>
+</br>
+</br>
+</br>
 
 ## `#!cpp RSA::sign`
 
@@ -119,8 +128,10 @@ int main()
   return 0;
 }
 ```
-
-</br></br>
+</br>
+</br>
+</br>
+</br>
 
 ## `RSA::verify`
 !!! note
@@ -152,7 +163,9 @@ int main()
   return 0;
 }
 ```
-
-</br></br>
+</br>
+</br>
+</br>
+</br>
 
 

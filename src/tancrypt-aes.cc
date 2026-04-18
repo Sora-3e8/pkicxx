@@ -9,7 +9,7 @@
 
 namespace tancrypt
 {
-  std::vector<unsigned char> AES::encrypt(AES::keyc &key_container, std::vector<unsigned char> buffer)
+  std::vector<unsigned char> AES::encrypt(AES::keyc &key_container, const std::vector<unsigned char> &buffer)
   {
     std::vector<unsigned char> hashed_key;
 
@@ -137,7 +137,7 @@ namespace tancrypt
   }
 
   
-  std::vector<unsigned char> AES::decrypt(AES::keyc &key_container, std::vector<unsigned char> buffer)
+  std::vector<unsigned char> AES::decrypt(AES::keyc &key_container, const std::vector<unsigned char> &buffer)
   {
     std::vector<unsigned char> hashed_key;
 
@@ -192,7 +192,7 @@ namespace tancrypt
 
     // Offset pointer to the buffer where we write the actual encrypted data, only after IV buffer
     unsigned char* out_buf = aes_data.data();
-    unsigned char* input_buf = buffer.data()+iv_len;
+    const unsigned char* input_buf = buffer.data()+iv_len;
     // 16KB chunk
     int chunk_size = (16*1024);
     // Irregular chunk size
@@ -257,7 +257,7 @@ namespace tancrypt
     return aes_data;
   }
 
-  std::vector<unsigned char> AES::getNonce(std::vector<unsigned char>buffer, AES::Type type)
+  std::vector<unsigned char> AES::getNonce(const std::vector<unsigned char> &buffer, AES::Type type)
   {
     if(AES::_aesTypeMap().count(type)==0) throw std::runtime_error("[tancrypt::AES::getNonce] Invalid AES cipher type.");
     evp_cipher_st* ciph = EVP_CIPHER_fetch(NULL, AES::_aesTypeMap().at(type),NULL);

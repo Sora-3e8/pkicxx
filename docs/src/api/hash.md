@@ -1,7 +1,6 @@
 # Hash
 
 ## Overview
-
 !!! note "Algorithm support"
     The supported OpenSSL algorithms are limited to those mapped in enum class hashAlg.  
     This prevents errors from requesting unsupported or non-existent algorithms.
