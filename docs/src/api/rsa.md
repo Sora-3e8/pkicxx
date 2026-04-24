@@ -11,12 +11,12 @@ All provided functions are provided as static stateless functions, this simplifi
 </br>
 
 ## `#!cpp RSA::encrypt`
-### `#!cpp RSA::encrypt(pkic& key,std::vector<unsigned char>& payload)`
+### `#!cpp RSA::encrypt(pkic& key,dutils::dbuffer& payload)`
 * **Parameters:**
     * `#!cpp tancrypt::RSA::pkic key` - Key container (priv/pubkey must be loaded)
-    * `#!cpp std::vector<unsigned char>& payload` - Data buffer to encrypt
+    * `#!cpp dutils::dbuffer& payload` - Data buffer to encrypt
 * **Returns:**
-    * `#!cpp std::vector<unsigned char>` - Encrypted data buffer
+    * `#!cpp dutils::dbuffer` - Encrypted data buffer
 
 ### Encrypt example
 ```cpp linenums="1"
@@ -26,13 +26,13 @@ int main()
 {
   // Data buffer setup
   std::string my_message = "Hewwo I am secret ^.^";
-  std::vector<unsigned char> payload(my_message.size());
+  dutils::dbuffer payload(my_message.size());
   std::copy(my_message.data(),my_message.data()+my_message.size(),payload.data());
 
   // Keypair with key size of 2048 gets generated and our buffer gets encrypted
   tancrypt::RSA::pkic key_store;
   key_store.generate_keypair(2048);
-  std::vector<unsigned char> res = tancrypt::RSA::pki::encrypt(key_store,payload);
+  dutils::dbuffer res = tancrypt::RSA::pki::encrypt(key_store,payload);
 
   // Check results compared original, hex x  encrypted
   std::cout << "Original:" << std::endl;
@@ -51,12 +51,12 @@ int main()
 </br>
 
 ## `#!cpp RSA::decrypt`
-### `#!cpp RSA::decrypt(pkic& key,std::vector<unsigned char>& payload)`
+### `#!cpp RSA::decrypt(pkic& key,dutils::dbuffer& payload)`
 * **Parameters:**
     * `#!cpp tancrypt::RSA::pkic& key` - Key container (Must contain private key)
-    * `#!cpp std::vector<unsigned char>& payload` - Encrypted data buffer
+    * `#!cpp dutils::dbuffer& payload` - Encrypted data buffer
 * **Returns:**
-    * `#!cpp std::vector<unsigned char>` - Decrypted data buffer
+    * `#!cpp dutils::dbuffer` - Decrypted data buffer
     
 
 ### Decrypt example
@@ -70,9 +70,9 @@ int main()
 
   // Preparing encrypted data 
   std::string my_message = "Hewwo I am secret ^.^";
-  std::vector<unsigned char> payload(my_message.size());
+  dutils::dbuffer payload(my_message.size());
   std::copy(my_message.data(),my_message.data()+my_message.size(),payload.data()); 
-  std::vector<unsigned char> res = tancrypt::RSA::pki::encrypt(key,payload);
+  dutils::dbuffer res = tancrypt::RSA::pki::encrypt(key,payload);
   std::cout << "Original:" << std::endl;
   std::cout << my_message << std::endl;
   std::cout << "Hex:" << std::endl;
@@ -81,7 +81,7 @@ int main()
   std::cout << tancrypt::hexStr(res) << std::endl;
 
   // Decrypting the data again
-  std::vector<unsigned char> res_decrypted = tancrypt::pki::decrypt(key,res);
+  dutils::dbuffer res_decrypted = tancrypt::pki::decrypt(key,res);
   
   // Debug print to check that the data indeed match
   std::cout << "Res decrypted hex:"<< std::endl;
@@ -99,13 +99,13 @@ int main()
 
 ## `#!cpp RSA::sign`
 
-### `#!cpp RSA::sign(pkic& key,std::vector<unsigned char> &buffer, hashAlg alg)`
+### `#!cpp RSA::sign(pkic& key,dutils::dbuffer &buffer, hashAlg alg)`
 * **Parameters:**
     * `#!cpp tancrypt::RSA::pkic key` - key container (must contain private key)
-    * `#!cpp std::vector<unsigned char> &buffer` - The data to be signed
+    * `#!cpp dutils::dbuffer &buffer` - The data to be signed
     * `#!cpp tancrypt::hashAlg alg` - Hashing algorithm to use for the digest
 * **Returns:**
-    * `#!cpp std::vector<unsigned char>` - Data signature
+    * `#!cpp dutils::dbuffer` - Data signature
 
 ### Signature example
 ```cpp linenums="1"
@@ -117,10 +117,10 @@ int main()
   key_store.generate_keypair(2048);
 
   std::string message = "I confirm this transaction.";
-  std::vector<unsigned char> data(message.begin(), message.end());
+  dutils::dbuffer data(message.begin(), message.end());
 
   // Signing the data using SHA256
-  std::vector<unsigned char> signature = tancrypt::RSA::pki::sign(key_store, data, tancrypt::hashAlg::SHA256);
+  dutils::dbuffer signature = tancrypt::RSA::pki::sign(key_store, data, tancrypt::hashAlg::SHA256);
 
   std::cout << "Signature (Hex):" << std::endl;
   std::cout << tancrypt::hexStr(signature) << std::endl;
@@ -136,11 +136,11 @@ int main()
 ## `RSA::verify`
 !!! note
     Algorithm choice must match the algorithm which was used to sign the data, otherwise the operation will fail.
-### `RSA::verify(pkic& key, std::vector<unsigned char>&sig, std::vector<unsigned char> &buffer, hashAlg alg)`
+### `RSA::verify(pkic& key, dutils::dbuffer&sig, dutils::dbuffer &buffer, hashAlg alg)`
 * **Parameters:**
     * `#!cpp tancrypt::RSA::pkic& key` - key container (must contain public key)
-    * `#!cpp std::vector<unsigned char> &sig` - Singature data buffer
-    * `#!cpp std::vector<unsigned char> &buffer` - The data to verify
+    * `#!cpp dutils::dbuffer &sig` - Singature data buffer
+    * `#!cpp dutils::dbuffer &buffer` - The data to verify
     * `#!cpp tancrypt::hashAlg alg` - Hashing algorithm to use for the digest
 * **Returns:**
     * `#!cpp bool` - Signature matches data (returns `#!cpp true` if valid)

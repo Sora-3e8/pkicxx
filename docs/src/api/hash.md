@@ -40,12 +40,12 @@ This enum class is used as hashAlg type, it allows better type safety and decrea
 Provides hashing functionality required for sign and verify functions,  
 but can be also used independently.
 
-### `#!cpp tancrypt::hash(std::vector<unsigned char>& data,hashAlg alg)`
+### `#!cpp tancrypt::hash(dutils::dbuffer& data,hashAlg alg)`
 * **Parameters:**
-    * `#!cpp std::vector<unsigned char>& data` - Data buffer to hash
+    * `#!cpp dutils::dbuffer& data` - Data buffer to hash
     * `#!cpp tancrypt::hashAlg alg` - Algorithm to use for the digest.
 * **Returns:**
-    * `std::vector<unsigned char> data` - Hashed data buffer
+    * `dutils::dbuffer data` - Hashed data buffer
 
 </br></br>
 

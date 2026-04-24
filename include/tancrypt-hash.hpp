@@ -3,10 +3,11 @@
 
 #include "tancrypt-hashtypes.hpp"
 #include <vector>
+#include "dutils.hpp"
 
 namespace tancrypt
 {
-  std::vector<unsigned char> hash(const std::vector<unsigned char> &buffer, hashAlg alg);
+  dutils::dbuffer hash(const dutils::dbuffer &buffer, hashAlg alg);
 }
 
 #endif

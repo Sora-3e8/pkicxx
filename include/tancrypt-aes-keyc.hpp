@@ -4,9 +4,9 @@
 #include <vector>
 #include <map>
 #include "tancrypt-hashtypes.hpp"
+#include "dutils.hpp"
 
 struct evp_cipher_st;
-
 
 namespace tancrypt
 {
@@ -42,23 +42,23 @@ namespace tancrypt
       public:
         keyc();
         ~keyc();
-        keyc(const std::vector<unsigned char>& key,AES::Type type);
-        keyc(const std::vector<unsigned char>& key,AES::Type type,hashAlg alg);
+        keyc(const dutils::dbuffer& key,AES::Type type);
+        keyc(const dutils::dbuffer& key,AES::Type type,hashAlg alg);
         
         void setType(AES::Type type);
         void setHashAlg(hashAlg alg);
         void setHashEnabled(bool val);
         const hashAlg getHashAlg();
         const bool getHashEnabled();
-        void setKey(const std::vector<unsigned char> &key);
-        const std::vector<unsigned char> &getKey();
+        void setKey(const dutils::dbuffer &key);
+        const dutils::dbuffer &getKey();
         evp_cipher_st* cipher = nullptr;
         
         
       private:
         hashAlg _alg=hashAlg::SHA256;
         bool do_hash=false;
-        std::vector<unsigned char> _key;
+        dutils::dbuffer _key;
     };
   }
 }

@@ -37,18 +37,18 @@ as a standalone header.
 ## DER loaders
 DER loaders, class methods that load RSA keys from DER data buffers
 
-### `#!cpp loadPrivDER(std::vector<unsigned char>& DER)`
+### `#!cpp loadPrivDER(dutils::dbuffer& DER)`
 Loads private key from DER data buffer into the key container
 
 * **Parameters:**
-    * `#!cpp std::vector<unsigned char>& DER` - Private key data buffer in with DER format
+    * `#!cpp dutils::dbuffer& DER` - Private key data buffer in with DER format
 * **Returns:**
 
-### `#!cpp loadPubDER(std::vector<unsigned char>& DER)`
+### `#!cpp loadPubDER(dutils::dbuffer& DER)`
 Loads public key from DER data buffer into the key container
 
 * **Parameters:**
-    * `#!cpp std::vector<unsigned char>& DER` - Public key data buffer in with DER format
+    * `#!cpp dutils::dbuffer& DER` - Public key data buffer in with DER format
 * **Returns:**
 </br>
 </br>
@@ -74,12 +74,12 @@ Loads public key from DER data buffer into the key container
 ### `#!cpp getPrivDER()`
 * **Parameters:**
 * **Returns:**
-    * `std::vector<unsigned char>& DER` - Private key DER data buffer
+    * `dutils::dbuffer& DER` - Private key DER data buffer
 
 ### `#!cpp getPubDER()`
 * **Parameters:**
 * **Returns:**
-    * `std::vector<unsigned char>& DER` - Public key DER data buffer
+    * `dutils::dbuffer& DER` - Public key DER data buffer
 </br>
 </br>
 </br>

@@ -14,23 +14,23 @@ namespace tancrypt
     }
 
     
-    void keyc::setKey(const std::vector<unsigned char> &key)
+    void keyc::setKey(const dutils::dbuffer &key)
     {
        _key = key;
     }
     
-    const std::vector<unsigned char>& keyc::getKey()
+    const dutils::dbuffer& keyc::getKey()
     {
       return _key;
     }
     
-    keyc::keyc(const std::vector<unsigned char>& key,AES::Type type)
+    keyc::keyc(const dutils::dbuffer& key,AES::Type type)
     {
       setType(type);
       setKey(key);
     }
     
-    keyc::keyc(const std::vector<unsigned char>& key,AES::Type type,hashAlg alg)
+    keyc::keyc(const dutils::dbuffer& key,AES::Type type,hashAlg alg)
     {
       setType(type);
       setKey(key);

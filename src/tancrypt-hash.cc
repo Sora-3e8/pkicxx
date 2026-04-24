@@ -5,7 +5,7 @@
 
 namespace tancrypt
 {
-  std::vector<unsigned char> hash(const std::vector<unsigned char> &buffer, hashAlg alg)
+  dutils::dbuffer hash(const dutils::dbuffer &buffer, hashAlg alg)
   {
     if(_hashTypeMap().count((int)alg)==0) throw std::invalid_argument("[tancrypt::hash] Invalid hashing algorithm.");
     EVP_MD *md = EVP_MD_fetch(NULL, _hashTypeMap().at((int)alg), NULL);
@@ -18,7 +18,7 @@ namespace tancrypt
     size_t dlen = EVP_MD_get_size(md);
     EVP_MD_free(md);
     
-    std::vector<unsigned char>buffer_hashed(dlen);
+    dutils::dbuffer buffer_hashed(dlen);
     size_t dwritten;
     
     if(EVP_Q_digest(NULL,_hashTypeMap().at((int)alg),NULL,buffer.data(),buffer.size(),buffer_hashed.data(),&dwritten)!=1)

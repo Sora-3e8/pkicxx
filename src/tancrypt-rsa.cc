@@ -12,7 +12,7 @@ namespace tancrypt
 {
   namespace RSA
   {  
-  std::vector<unsigned char> encrypt(pkic& key,std::vector<unsigned char>& payload)
+  dutils::dbuffer encrypt(pkic& key,dutils::dbuffer& payload)
   {
     if(!key.isInitialized())
     {
@@ -20,7 +20,7 @@ namespace tancrypt
     }
    
     EVP_PKEY_CTX *ctx = EVP_PKEY_CTX_new(key,NULL);
-    if(!ctx) return std::vector<unsigned char>();
+    if(!ctx) return dutils::dbuffer();
       
     if (EVP_PKEY_encrypt_init(ctx) <= 0)
     {
@@ -44,7 +44,7 @@ namespace tancrypt
       throw std::runtime_error("[tancrypt::RSA::encrypt] Encryption failed.\nError "+std::to_string(_err)+", "+ERR_reason_error_string(_err));
     }
     
-    std::vector<unsigned char> encrypted(len);
+    dutils::dbuffer encrypted(len);
     if(EVP_PKEY_encrypt(ctx,encrypted.data(),&len,payload.data(),payload.size())<=0)
     {
       unsigned long _err = ERR_get_error();
@@ -56,7 +56,7 @@ namespace tancrypt
     return encrypted;
   }
 
-  std::vector<unsigned char> decrypt(pkic& key,std::vector<unsigned char>& payload)
+  dutils::dbuffer decrypt(pkic& key,dutils::dbuffer& payload)
   {
     if(!key.isInitialized())
     {
@@ -64,7 +64,7 @@ namespace tancrypt
     }
 
     EVP_PKEY_CTX *ctx = EVP_PKEY_CTX_new(key,NULL);
-    if(!ctx) return std::vector<unsigned char>();
+    if(!ctx) return dutils::dbuffer();
     
     if (EVP_PKEY_decrypt_init(ctx) <= 0)
     {
@@ -83,7 +83,7 @@ namespace tancrypt
       throw std::runtime_error("[tancrypt::RSA::decrypt] Decryption failed.\nError "+std::to_string(_err)+", "+ERR_reason_error_string(_err));
     }
     
-    std::vector<unsigned char> decrypted(len);
+    dutils::dbuffer decrypted(len);
     if(EVP_PKEY_decrypt(ctx,decrypted.data(),&len,payload.data(),payload.size())<=0)
     {
       unsigned long _err = ERR_get_error();
@@ -97,7 +97,7 @@ namespace tancrypt
     return decrypted;
   }
 
-  std::vector<unsigned char> sign(pkic& key,std::vector<unsigned char> &buffer, hashAlg alg)
+  dutils::dbuffer sign(pkic& key,dutils::dbuffer &buffer, hashAlg alg)
   {
 
     EVP_SIGNATURE* alg_sig = nullptr;
@@ -116,7 +116,7 @@ namespace tancrypt
       throw std::runtime_error("[tancrypt::RSA::sign] Could not load the key.\nError "+std::to_string(_err)+", "+ERR_reason_error_string(_err));
     }
     
-    std::vector<unsigned char> buffer_hashed = hash(buffer,alg);
+    dutils::dbuffer buffer_hashed = hash(buffer,alg);
     alg_sig = EVP_SIGNATURE_fetch(NULL, "RSA", NULL);
 
     if(alg_sig==nullptr)
@@ -151,7 +151,7 @@ namespace tancrypt
       EVP_SIGNATURE_free(alg_sig);
       throw std::runtime_error("[tancrypt::RSA::sign] Could not sign.\nError "+std::to_string(_err)+", "+ERR_reason_error_string(_err));
     }
-    std::vector<unsigned char> signature(siglen);
+    dutils::dbuffer signature(siglen);
     
     if (EVP_PKEY_sign(ctx, signature.data(), &siglen, buffer_hashed.data(), buffer_hashed.size()) <= 0)
     {
@@ -167,7 +167,7 @@ namespace tancrypt
     return signature;
   }
   
-  bool verify(pkic& key, std::vector<unsigned char>&sig, std::vector<unsigned char> &buffer, hashAlg alg)
+  bool verify(pkic& key, dutils::dbuffer&sig, dutils::dbuffer &buffer, hashAlg alg)
   {
     if(!key.isInitialized())
     {
@@ -185,7 +185,7 @@ namespace tancrypt
       throw std::runtime_error("[tancrypt::RSA::verfiy] Could not initialize signature algorithm.\nError "+std::to_string(_err)+", "+ERR_reason_error_string(_err));
     }
 
-    std::vector<unsigned char> hashed_buffer = hash(buffer, alg);
+    dutils::dbuffer hashed_buffer = hash(buffer, alg);
     
     if(EVP_PKEY_verify_init_ex2(ctx,alg_sig,NULL)<=0)
     {

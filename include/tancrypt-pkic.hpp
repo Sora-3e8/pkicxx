@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include "dutils.hpp"
 
 extern "C" struct evp_pkey_st;
 
@@ -24,12 +25,12 @@ namespace tancrypt
         bool isInitialized();
             
         // DER loaders
-        void loadPrivDER(std::vector<unsigned char>& DER);
-        void loadPubDER(std::vector<unsigned char>& DER);
+        void loadPrivDER(dutils::dbuffer &DER);
+        void loadPubDER(dutils::dbuffer &DER);
 
         // DER getters
-        std::vector<unsigned char> getPrivDER();
-        std::vector<unsigned char> getPubDER();
+        dutils::dbuffer getPrivDER();
+        dutils::dbuffer getPubDER();
       
         // PEM loaders
         void importPEM(const char* file);

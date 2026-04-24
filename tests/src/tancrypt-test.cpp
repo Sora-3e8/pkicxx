@@ -1,11 +1,6 @@
 #include <iostream>
-#include <map>
-#include <functional>
 #include <iostream>
-#include <vector>
-#include "tancrypt-aes-keyc.hpp"
-#include "tancrypt-hash.hpp"
-#include "tancrypt-hashtypes.hpp"
+#include <functional>
 #include "tancrypt.hpp"
 
 int pkicInit(char* argv[], int argc)
@@ -49,8 +44,8 @@ int getPrivDER(char* argv[], int argc)
 {
   tancrypt::RSA::pkic key_factory;
   key_factory.generate_keypair(2048);
-  std::vector<unsigned char> priv_der= key_factory.getPrivDER();
-  std::cout << tancrypt::hexStr(priv_der) << std::endl;
+  dutils::dbuffer priv_der= key_factory.getPrivDER();
+  std::cout << dutils::hexStr(priv_der) << std::endl;
   
   return 0;
 }
@@ -59,8 +54,8 @@ int getPubDER(char* argv[], int argc)
 {
   tancrypt::RSA::pkic key_factory;
   key_factory.generate_keypair(2048);
-  std::vector<unsigned char> pub_der= key_factory.getPubDER();
-  std::cout << tancrypt::hexStr(pub_der) << std::endl;
+  dutils::dbuffer pub_der= key_factory.getPubDER();
+  std::cout << dutils::hexStr(pub_der) << std::endl;
   
   return 0;
 }
@@ -71,15 +66,15 @@ int loadPrivDER(char* argv[], int argc)
   tancrypt::RSA::pkic key_synth;
   tancrypt::RSA::pkic key_loaded;
   key_synth.generate_keypair(2048);
-  std::vector<unsigned char> der_synth = key_synth.getPrivDER();
+  dutils::dbuffer der_synth = key_synth.getPrivDER();
   key_loaded.loadPrivDER(der_synth);
-  std::vector<unsigned char> der_loaded = key_loaded.getPrivDER();
+  dutils::dbuffer der_loaded = key_loaded.getPrivDER();
   std::cout << "Generated priv hex:" << std::endl;
-  std::cout << tancrypt::hexStr(der_synth) << std::endl;
+  std::cout << dutils::hexStr(der_synth) << std::endl;
   std::cout << "Loaded priv hex:" << std::endl;
-  std::cout << tancrypt::hexStr(der_loaded) << std::endl;
+  std::cout << dutils::hexStr(der_loaded) << std::endl;
   
-  if(tancrypt::hexStr(der_synth)!=tancrypt::hexStr(der_loaded)) return 1;
+  if(dutils::hexStr(der_synth)!=dutils::hexStr(der_loaded)) return 1;
   return 0;
 }
 
@@ -88,15 +83,15 @@ int loadPubDER(char* argv[], int argc)
   tancrypt::RSA::pkic key_synth;
   tancrypt::RSA::pkic key_loaded;
   key_synth.generate_keypair(2048);
-  std::vector<unsigned char> der_synth = key_synth.getPubDER();
+  dutils::dbuffer der_synth = key_synth.getPubDER();
   key_loaded.loadPubDER(der_synth);
-  std::vector<unsigned char> der_loaded = key_loaded.getPubDER();
+  dutils::dbuffer der_loaded = key_loaded.getPubDER();
   std::cout << "Generated pub hex:" << std::endl;
-  std::cout << tancrypt::hexStr(der_synth) << std::endl;
+  std::cout << dutils::hexStr(der_synth) << std::endl;
   std::cout << "Loaded pub hex:" << std::endl;
-  std::cout << tancrypt::hexStr(der_loaded) << std::endl;
+  std::cout << dutils::hexStr(der_loaded) << std::endl;
   
-  if(tancrypt::hexStr(der_synth)!=tancrypt::hexStr(der_loaded)) return 1;
+  if(dutils::hexStr(der_synth)!=dutils::hexStr(der_loaded)) return 1;
   return 0;
 }
 
@@ -105,7 +100,7 @@ int importPrivPEM(char* argv[], int argc)
   tancrypt::RSA::pkic keyc;
   std::cout << "Priv pem: " << argv[2] << std::endl;
   keyc.importPEM(argv[2]);
-  std::string content = tancrypt::hexStr(keyc.getPrivDER());
+  std::string content = dutils::hexStr(keyc.getPrivDER());
   std::cout << "Priv hex:" << std::endl;
   std::cout << content << std::endl;
   if(content=="") return 1;
@@ -117,7 +112,7 @@ int importPubPEM(char* argv[], int argc)
 {
   tancrypt::RSA::pkic keyc;
   keyc.importPEM(argv[2]);
-  std::string content = tancrypt::hexStr(keyc.getPubDER());
+  std::string content = dutils::hexStr(keyc.getPubDER());
   std::cout << "Pub hex:" << std::endl;
   std::cout << content << std::endl;
   if(content == "") return 1;
@@ -184,10 +179,10 @@ int loadPrivPEM(char* argv[], int argc)
   keyc_synth.generate_keypair(2048);
   keyc_loaded.loadPEMStr(keyc_synth.getPrivPEM().c_str());
   std::cout << "Priv synth: " << std::endl;
-  std::cout << tancrypt::hexStr(keyc_synth.getPrivDER()) << std::endl;
+  std::cout << dutils::hexStr(keyc_synth.getPrivDER()) << std::endl;
   std::cout << "Priv loaded: " << std::endl;
-  std::cout << tancrypt::hexStr(keyc_loaded.getPrivDER()) << std::endl;
-  if(tancrypt::hexStr(keyc_synth.getPrivDER()) != tancrypt::hexStr(keyc_loaded.getPrivDER())) return 1;
+  std::cout << dutils::hexStr(keyc_loaded.getPrivDER()) << std::endl;
+  if(dutils::hexStr(keyc_synth.getPrivDER()) != dutils::hexStr(keyc_loaded.getPrivDER())) return 1;
   return 0; 
 }
 
@@ -199,11 +194,11 @@ int loadPubPEM(char* argv[], int argc)
   keyc_synth.generate_keypair(2048);
   keyc_loaded.loadPEMStr(keyc_synth.getPubPEM().c_str());
   std::cout << "Pub synth: " << std::endl;
-  std::cout << tancrypt::hexStr(keyc_synth.getPubDER()) << std::endl;
+  std::cout << dutils::hexStr(keyc_synth.getPubDER()) << std::endl;
   std::cout << "Pub loaded: " << std::endl;
-  std::cout << tancrypt::hexStr(keyc_loaded.getPubDER()) << std::endl;
+  std::cout << dutils::hexStr(keyc_loaded.getPubDER()) << std::endl;
 
-  if(tancrypt::hexStr(keyc_synth.getPubDER()) != tancrypt::hexStr(keyc_loaded.getPubDER())) return 1;
+  if(dutils::hexStr(keyc_synth.getPubDER()) != dutils::hexStr(keyc_loaded.getPubDER())) return 1;
 
   return 0; 
 }
@@ -216,10 +211,10 @@ int loadBundlePEM(char* argv[], int argc)
   keyc_synth.generate_keypair(2048);
   keyc_loaded.loadPEMStr(keyc_synth.getBundlePEM().c_str());
   std::cout << "Pub loaded: " << std::endl;
-  std::cout << tancrypt::hexStr(keyc_loaded.getPubDER()) << std::endl;
+  std::cout << dutils::hexStr(keyc_loaded.getPubDER()) << std::endl;
 
-  if(tancrypt::hexStr(keyc_synth.getPrivDER()) != tancrypt::hexStr(keyc_loaded.getPrivDER())) return 1;
-  if(tancrypt::hexStr(keyc_synth.getPubDER()) != tancrypt::hexStr(keyc_loaded.getPubDER())) return 1;
+  if(dutils::hexStr(keyc_synth.getPrivDER()) != dutils::hexStr(keyc_loaded.getPrivDER())) return 1;
+  if(dutils::hexStr(keyc_synth.getPubDER()) != dutils::hexStr(keyc_loaded.getPubDER())) return 1;
 
   return 0; 
 }
@@ -252,19 +247,17 @@ int exportBundlePEM(char* argv[], int argc)
 
 int Encrypt_test(char* argv[], int argc)
 {
-  tancrypt::RSA::pkic key_factory;
-  key_factory.generate_keypair(2048);
-  std::string my_message = "Hewwo I am secret ^.^";
-  std::vector<unsigned char> payload(my_message.size());
-  std::copy(my_message.data(),my_message.data()+my_message.size(),payload.data());
-  std::vector<unsigned char> res = tancrypt::RSA::encrypt(key_factory,payload);
+  tancrypt::RSA::pkic key;
+  key.generate_keypair(2048);
+  dutils::dbuffer payload("Hewwo, I am secret ^.^");
+  dutils::dbuffer res = tancrypt::RSA::encrypt(key,payload);
   std::cout << "Original:" << std::endl;
-  std::cout << my_message << std::endl;
+  std::cout << payload.toStr()<< std::endl;
   std::cout << "Hex::" << std::endl;
-  std::cout << tancrypt::hexStr(payload) << std::endl;
+  std::cout << dutils::hexStr(payload) << std::endl;
   std::cout << "Encrypted:" << std::endl;
-  std::cout << tancrypt::hexStr(res) << std::endl;
-  if (tancrypt::hexStr(payload)==tancrypt::hexStr(res)||res.size()==0) return 1;
+  std::cout << dutils::hexStr(res) << std::endl;
+  if (dutils::hexStr(payload)==dutils::hexStr(res)||res.size()==0) return 1;
   
   return 0;
 }
@@ -273,34 +266,29 @@ int Decrypt_test(char* argv[], int argc)
 {
   tancrypt::RSA::pkic key;
   key.generate_keypair(2048);
-  std::string my_message = "Hewwo I am secret ^.^";
-  std::vector<unsigned char> payload(my_message.size());
-  std::copy(my_message.data(),my_message.data()+my_message.size(),payload.data()); 
-  std::vector<unsigned char> res = tancrypt::RSA::encrypt(key,payload);
+  dutils::dbuffer payload("Hewwo, I am secret ^.^");
+  dutils::dbuffer res = tancrypt::RSA::encrypt(key,payload);
   std::cout << "Original:" << std::endl;
-  std::cout << my_message << std::endl;
+  std::cout << payload.toStr() << std::endl;
   std::cout << "Hex:" << std::endl;
-  std::cout << tancrypt::hexStr(payload) << std::endl;
+  std::cout << dutils::hexStr(payload) << std::endl;
   std::cout << "Encrypted:" << std::endl;
-  std::cout << tancrypt::hexStr(res) << std::endl;
-  std::vector<unsigned char> res_decrypted = tancrypt::RSA::decrypt(key,res);
+  std::cout << dutils::hexStr(res) << std::endl;
+  dutils::dbuffer res_decrypted = tancrypt::RSA::decrypt(key,res);
   std::cout << "Res decrypted hex:"<< std::endl;
-  std::cout << tancrypt::hexStr(res_decrypted) << std::endl;
+  std::cout << dutils::hexStr(res_decrypted) << std::endl;
   std::cout << "Res decrypted:" << std::endl;
   std::cout << res_decrypted.data() << std::endl;
-  if(tancrypt::hexStr(payload)==tancrypt::hexStr(res_decrypted)) return 0;
+  if(dutils::hexStr(payload)==dutils::hexStr(res_decrypted)) return 0;
   
   return 1;
 }
 
 int hashTest(char* argv[], int argc)
 {
-
-  std::string my_message = "Hewwo I am secret ^.^";
-  std::vector<unsigned char> payload(my_message.size());
-  std::copy(my_message.data(),my_message.data()+my_message.size(),payload.data()); 
-  std::vector<unsigned char> hashed_payload = tancrypt::hash(payload,tancrypt::hashAlg::SHA256);
-  std::cout<<tancrypt::hexStr(hashed_payload)<<std::endl;
+  dutils::dbuffer payload("Hewwo, I am secret ^.^");
+  dutils::dbuffer hashed_payload = tancrypt::hash(payload,tancrypt::hashAlg::SHA256);
+  std::cout<<dutils::hexStr(hashed_payload)<<std::endl;
   return 0;
 }
 
@@ -309,12 +297,10 @@ int signTest(char* argv[], int argc)
 {
   tancrypt::RSA::pkic key;
   key.generate_keypair(2048);
-  std::string my_message = "Hewwo I am signed ^.^";
-  std::vector<unsigned char> payload(my_message.size());
-  std::copy(my_message.data(),my_message.data()+my_message.size(),payload.data()); 
-  std::vector<unsigned char> signature = tancrypt::RSA::sign(key,payload,tancrypt::hashAlg::SHA256);
+  dutils::dbuffer payload("Hewwo, I am signed ^.^");
+  dutils::dbuffer signature = tancrypt::RSA::sign(key,payload,tancrypt::hashAlg::SHA256);
   std::cout << "Signature hex:" << std::endl;
-  std::cout<<tancrypt::hexStr(signature)<<std::endl;
+  std::cout<<dutils::hexStr(signature)<<std::endl;
   return 0;
 }
 
@@ -322,12 +308,10 @@ int verifyTest(char* argv[], int argc)
 {
   tancrypt::RSA::pkic key;
   key.generate_keypair(2048);
-  std::string my_message = "Hewwo I am signed ^.^";
-  std::vector<unsigned char> payload(my_message.size());
-  std::copy(my_message.data(),my_message.data()+my_message.size(),payload.data());
-  std::vector<unsigned char> signature = tancrypt::RSA::sign(key,payload,tancrypt::hashAlg::SHA256);
+  dutils::dbuffer payload("Hewwo, I am signed ^.^");
+  dutils::dbuffer signature = tancrypt::RSA::sign(key,payload,tancrypt::hashAlg::SHA256);
   std::cout << "Signature hex:" << std::endl;
-  std::cout<<tancrypt::hexStr(signature)<<std::endl;
+  std::cout<<dutils::hexStr(signature)<<std::endl;
   bool res = tancrypt::RSA::verify(key, signature, payload,tancrypt::hashAlg::SHA256);
 
   return res;
@@ -336,9 +320,7 @@ int verifyTest(char* argv[], int argc)
 int AESKEY_init1Test(char* argv[], int argc)
 {
   using namespace tancrypt;  
-  std::string my_key = "Hewwo I am key ^.^";
-  std::vector<unsigned char> my_keydata(my_key.size());
-  std::copy(my_key.data(),my_key.data()+my_key.size(),my_keydata.data());
+  dutils::dbuffer my_keydata("Hewwo, I am secret >.<");
   tancrypt::AES::keyc key_variant1(my_keydata,AES::Type::CBC256);
 
   return 0;
@@ -347,9 +329,7 @@ int AESKEY_init1Test(char* argv[], int argc)
 int AESKEY_init2Test(char* argv[], int argc)
 {
   using namespace tancrypt;  
-  std::string my_key = "Hewwo I am key ^.^";
-  std::vector<unsigned char> my_keydata(my_key.size());
-  std::copy(my_key.data(),my_key.data()+my_key.size(),my_keydata.data());
+  dutils::dbuffer my_keydata("Hewwo, I am secret >.<");
   tancrypt::AES::keyc key_variant2(my_keydata,AES::Type::CBC256,hashAlg::SHA256);
   
   return 0;
@@ -358,21 +338,17 @@ int AESKEY_init2Test(char* argv[], int argc)
 int AesEncryptV1(char* argv[], int argc)
 {
 
-  std::string my_message = "Hewwo I am secret ^.^";
-  std::vector<unsigned char> payload(my_message.size());
-  std::copy(my_message.data(),my_message.data()+my_message.size(),payload.data()); 
+  dutils::dbuffer payload("Hewwo, I am secret >.<");
   
   using namespace tancrypt;  
-  std::string my_key = "Hewwo I am key ^.^";
-  std::vector<unsigned char> my_keydata(my_key.size());
-  std::copy(my_key.data(),my_key.data()+my_key.size(),my_keydata.data());
-  std::vector<unsigned char> hashed_key = tancrypt::hash(my_keydata , hashAlg::SHA256);
+  dutils::dbuffer my_keydata("Hewwo, I am key ^.^");
+  dutils::dbuffer hashed_key = tancrypt::hash(my_keydata , hashAlg::SHA256);
   tancrypt::AES::keyc key_variant1(hashed_key,AES::Type::CBC256);
-  std::vector<unsigned char>enc_buffer = AES::encrypt(key_variant1, payload);
+  dutils::dbuffer enc_buffer = AES::encrypt(key_variant1, payload);
 
-  std::cout << "Original: " << my_message << std::endl; 
-  std::cout << "Original(hex): " << tancrypt::hexStr(payload) << std::endl; 
-  std::cout << "Encrypted(hex): " << tancrypt::hexStr(enc_buffer) << std::endl;
+  std::cout << "Original: " << payload.toStr() << std::endl; 
+  std::cout << "Original(hex): " << dutils::hexStr(payload) << std::endl; 
+  std::cout << "Encrypted(hex): " << dutils::hexStr(enc_buffer) << std::endl;
   
   return 0;
 }
@@ -382,45 +358,38 @@ int AesEncryptV2(char* argv[], int argc)
 {
   using namespace tancrypt;
 
-  std::string my_message = "Hewwo I am secret ^.^";
-  std::vector<unsigned char> payload(my_message.size());
-  std::copy(my_message.data(),my_message.data()+my_message.size(),payload.data()); 
+  dutils::dbuffer payload("Hewwo, I am secret >.<");
   
-  std::string my_key = "Hewwo I am key ^.^";
-  std::vector<unsigned char> my_keydata(my_key.size());
-  std::copy(my_key.data(),my_key.data()+my_key.size(),my_keydata.data());
+  dutils::dbuffer my_keydata("Hewwo, I am key ^.^");
   tancrypt::AES::keyc key_variant2(my_keydata,AES::Type::CBC256,hashAlg::SHA256);
-  std::vector<unsigned char>enc_buffer = AES::encrypt(key_variant2, payload);
+  dutils::dbuffer enc_buffer = AES::encrypt(key_variant2, payload);
 
-  std::cout << "Original: " << my_message << std::endl; 
-  std::cout << "Original(hex): " << tancrypt::hexStr(payload) << std::endl; 
-  std::cout << "Encrypted(hex): " << tancrypt::hexStr(enc_buffer) << std::endl;
+  std::cout << "Original: " << payload.toStr() << std::endl; 
+  std::cout << "Original(hex): " << dutils::hexStr(payload) << std::endl; 
+  std::cout << "Encrypted(hex): " << dutils::hexStr(enc_buffer) << std::endl;
   
   return 0;
 }
 
 int AesDecryptV1(char* argv[], int argc)
 {
-
-  std::string my_message = "Hewwo I am secret ^.^";
-  std::vector<unsigned char> payload(my_message.size());
-  std::copy(my_message.data(),my_message.data()+my_message.size(),payload.data()); 
+  dutils::dbuffer payload("Hewwo, I am secret >.<");
   
   using namespace tancrypt;  
   std::string my_key = "Hewwo I am key ^.^";
-  std::vector<unsigned char> my_keydata(my_key.size());
+  dutils::dbuffer my_keydata(my_key.size());
   std::copy(my_key.data(),my_key.data()+my_key.size(),my_keydata.data());
-  std::vector<unsigned char> hashed_key = tancrypt::hash(my_keydata , hashAlg::SHA256);
+  dutils::dbuffer hashed_key = tancrypt::hash(my_keydata , hashAlg::SHA256);
   tancrypt::AES::keyc key_variant1(hashed_key,AES::Type::CBC256);
-  std::vector<unsigned char>enc_buffer = AES::encrypt(key_variant1, payload);
+  dutils::dbuffer enc_buffer = AES::encrypt(key_variant1, payload);
 
-  std::cout << "Original: " << my_message << std::endl; 
-  std::cout << "Original(hex): " << tancrypt::hexStr(payload) << std::endl; 
-  std::cout << "Encrypted(hex): " << tancrypt::hexStr(enc_buffer) << std::endl;
+  std::cout << "Original: " << payload.toStr() << std::endl; 
+  std::cout << "Original(hex): " << dutils::hexStr(payload) << std::endl; 
+  std::cout << "Encrypted(hex): " << dutils::hexStr(enc_buffer) << std::endl;
 
-  std::vector<unsigned char>dec_buffer = AES::decrypt(key_variant1, enc_buffer);
+  dutils::dbuffer dec_buffer = AES::decrypt(key_variant1, enc_buffer);
 
-  std::cout << "Decrypted(hex): " << tancrypt::hexStr(dec_buffer) << std::endl;
+  std::cout << "Decrypted(hex): " << dutils::hexStr(dec_buffer) << std::endl;
   std::cout << "Decrypted: " << dec_buffer.data() << std::endl;
 
   
@@ -430,49 +399,40 @@ int AesDecryptV1(char* argv[], int argc)
 
 int AesDecryptV2(char* argv[], int argc)
 {
-
-  std::string my_message = "Hewwo I am secret ^.^";
-  std::vector<unsigned char> payload(my_message.size());
-  std::copy(my_message.data(),my_message.data()+my_message.size(),payload.data()); 
+  dutils::dbuffer payload("Hewwo, I am secret >.<");
   
   using namespace tancrypt;  
-  std::string my_key = "Hewwo I am key ^.^";
-  std::vector<unsigned char> my_keydata(my_key.size());
-  std::copy(my_key.data(),my_key.data()+my_key.size(),my_keydata.data());
-  std::vector<unsigned char> hashed_key = tancrypt::hash(my_keydata , hashAlg::SHA256);
+  dutils::dbuffer my_keydata("Hewwo, I am key ^.^");
+  dutils::dbuffer hashed_key = tancrypt::hash(my_keydata , hashAlg::SHA256);
   tancrypt::AES::keyc key_variant1(hashed_key,AES::Type::CBC256);
-  std::vector<unsigned char>enc_buffer = AES::encrypt(key_variant1, payload);
+  dutils::dbuffer enc_buffer = AES::encrypt(key_variant1, payload);
 
-  std::cout << "Original: " << my_message << std::endl; 
-  std::cout << "Original(hex): " << tancrypt::hexStr(payload) << std::endl; 
-  std::cout << "Encrypted(hex): " << tancrypt::hexStr(enc_buffer) << std::endl;
+  std::cout << "Original: " << payload.toStr() << std::endl; 
+  std::cout << "Original(hex): " << dutils::hexStr(payload) << std::endl; 
+  std::cout << "Encrypted(hex): " << dutils::hexStr(enc_buffer) << std::endl;
 
-  std::vector<unsigned char>dec_buffer = AES::decrypt(key_variant1, enc_buffer);
+  dutils::dbuffer dec_buffer = AES::decrypt(key_variant1, enc_buffer);
 
-  std::cout << "Decrypted(hex): " << tancrypt::hexStr(dec_buffer) << std::endl;
+  std::cout << "Decrypted(hex): " << dutils::hexStr(dec_buffer) << std::endl;
   std::cout << "Decrypted: " << dec_buffer.data() << std::endl;
-  if(tancrypt::hexStr(dec_buffer)!=tancrypt::hexStr(payload)) return 1;
+  if(dutils::hexStr(dec_buffer)!=dutils::hexStr(payload)) return 1;
   
   return 0;
 }
 
 int getNonce_test(char* argv[], int argc)
 {
-  std::string my_message = "Hewwo I am secret ^.^";
-  std::vector<unsigned char> payload(my_message.size());
-  std::copy(my_message.data(),my_message.data()+my_message.size(),payload.data()); 
+  dutils::dbuffer payload("Hewwo, I am secret >.<");
   
   using namespace tancrypt;  
-  std::string my_key = "Hewwo I am key ^.^";
-  std::vector<unsigned char> my_keydata(my_key.size());
-  std::copy(my_key.data(),my_key.data()+my_key.size(),my_keydata.data());
-  std::vector<unsigned char> hashed_key = tancrypt::hash(my_keydata , hashAlg::SHA256);
+  dutils::dbuffer my_keydata("Hewwo, I am key ^.^");
+  dutils::dbuffer hashed_key = tancrypt::hash(my_keydata , hashAlg::SHA256);
   tancrypt::AES::keyc key_variant1(hashed_key,AES::Type::CBC256);
-  std::vector<unsigned char>enc_buffer = AES::encrypt(key_variant1, payload);
+  dutils::dbuffer enc_buffer = AES::encrypt(key_variant1, payload);
 
   
-  std::vector<unsigned char> nonce_out = tancrypt::AES::getNonce(enc_buffer,AES::Type::CBC256);
-  std::cout << tancrypt::hexStr(nonce_out) << std::endl;
+  dutils::dbuffer nonce_out = tancrypt::AES::getNonce(enc_buffer,AES::Type::CBC256);
+  std::cout << dutils::hexStr(nonce_out) << std::endl;
   
   return 0;
 }

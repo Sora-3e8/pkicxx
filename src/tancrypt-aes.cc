@@ -9,9 +9,9 @@
 
 namespace tancrypt
 {
-  std::vector<unsigned char> AES::encrypt(AES::keyc &key_container, const std::vector<unsigned char> &buffer)
+  dutils::dbuffer AES::encrypt(AES::keyc &key_container, const dutils::dbuffer &buffer)
   {
-    std::vector<unsigned char> hashed_key;
+    dutils::dbuffer hashed_key;
 
     // Throws error if key_container not ready
     if(key_container.cipher == nullptr) throw std::logic_error("[tancrypt::AES::encrypt] AES::keyc is not initialized");
@@ -40,7 +40,7 @@ namespace tancrypt
     int block_size = EVP_CIPHER_get_block_size(key_container.cipher);
 
     // Final output buffer
-    std::vector<unsigned char> aes_data(iv_len+buffer.size()+block_size);
+    dutils::dbuffer aes_data(iv_len+buffer.size()+block_size);
 
     // Retrieves random bytes - if needed
     if (iv_len!=0 && (iv_len<0||RAND_bytes(aes_data.data(),iv_len)!=1))
@@ -59,7 +59,7 @@ namespace tancrypt
     }
 
     // Points either to key directly or it's hashed buffer version
-    const std::vector<unsigned char>& _key = (key_container.getHashEnabled() ? hashed_key :  key_container.getKey());
+    const dutils::dbuffer& _key = (key_container.getHashEnabled() ? hashed_key :  key_container.getKey());
         
     if(EVP_CipherInit_ex2(ctx, key_container.cipher,_key.data(), aes_data.data(), 1, NULL)!=1)
     {
@@ -137,9 +137,9 @@ namespace tancrypt
   }
 
   
-  std::vector<unsigned char> AES::decrypt(AES::keyc &key_container, const std::vector<unsigned char> &buffer)
+  dutils::dbuffer AES::decrypt(AES::keyc &key_container, const dutils::dbuffer &buffer)
   {
-    std::vector<unsigned char> hashed_key;
+    dutils::dbuffer hashed_key;
 
     // Throws error if key_container not ready
     if(key_container.cipher == nullptr) throw std::logic_error("[tancrypt::AES::decrypt] AES::keyc is not initialized");
@@ -168,7 +168,7 @@ namespace tancrypt
     int block_size = EVP_CIPHER_get_block_size(key_container.cipher);
 
     // Final output buffer
-    std::vector<unsigned char> aes_data(block_size+iv_len);
+    dutils::dbuffer aes_data(block_size+iv_len);
     
     // Cipher context initialization
     EVP_CIPHER_CTX* ctx = EVP_CIPHER_CTX_new();
@@ -180,7 +180,7 @@ namespace tancrypt
     }
 
     // Points either to key directly or it's hashed buffer version
-    const std::vector<unsigned char>& _key = (key_container.getHashEnabled() ? hashed_key :  key_container.getKey());
+    const dutils::dbuffer& _key = (key_container.getHashEnabled() ? hashed_key :  key_container.getKey());
 
     if(EVP_CipherInit_ex2(ctx, key_container.cipher,_key.data(), buffer.data() ,0, NULL)!=1)
     {
@@ -257,7 +257,7 @@ namespace tancrypt
     return aes_data;
   }
 
-  std::vector<unsigned char> AES::getNonce(const std::vector<unsigned char> &buffer, AES::Type type)
+  dutils::dbuffer AES::getNonce(const dutils::dbuffer &buffer, AES::Type type)
   {
     if(AES::_aesTypeMap().count(type)==0) throw std::runtime_error("[tancrypt::AES::getNonce] Invalid AES cipher type.");
     evp_cipher_st* ciph = EVP_CIPHER_fetch(NULL, AES::_aesTypeMap().at(type),NULL);
@@ -266,7 +266,7 @@ namespace tancrypt
     
     if(length==0) throw std::logic_error("[tancrypt::AES::getNonce] Not applicable for given cipher type, nonce not used.");
     if(length<0) throw std::runtime_error("[tancrypt::AES::getNonce] Critical error, invalid cipher type or nonce not used.");
-    std::vector<unsigned char> nonce_buffer(length);
+    dutils::dbuffer nonce_buffer(length);
     std::copy(buffer.data(),buffer.data()+length,nonce_buffer.data());
     
     return nonce_buffer;

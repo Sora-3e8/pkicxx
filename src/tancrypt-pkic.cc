@@ -34,7 +34,7 @@ namespace tancrypt
       key_container = EVP_RSA_gen(length);
     }
 
-    void pkic::loadPrivDER(std::vector<unsigned char>& DER)
+    void pkic::loadPrivDER(dutils::dbuffer& DER)
     {
       const unsigned char* content = DER.data();
       d2i_PrivateKey(EVP_PKEY_RSA,&key_container,&content,DER.size());
@@ -45,7 +45,7 @@ namespace tancrypt
       }  
     }
   
-    void pkic::loadPubDER(std::vector<unsigned char>& DER)
+    void pkic::loadPubDER(dutils::dbuffer& DER)
     {
       const unsigned char* content = DER.data();
       d2i_PublicKey(EVP_PKEY_RSA,&key_container,&content,DER.size());
@@ -56,7 +56,7 @@ namespace tancrypt
       }
     }
   
-    std::vector<unsigned char> pkic::getPrivDER()
+    dutils::dbuffer pkic::getPrivDER()
     {
       if(key_container==nullptr)
       {
@@ -72,7 +72,7 @@ namespace tancrypt
         return {};     
       }
 
-      std::vector<unsigned char> key_der(key_len);
+      dutils::dbuffer key_der(key_len);
       unsigned char* pkey = key_der.data();
       int _bytes_written = i2d_PrivateKey(key_container, &pkey);
       if(_bytes_written!=key_len) throw std::runtime_error("\033[31m[tancrypt::RSA::pkic::getPrivDER] Critical error, buffer corrupted.\nBuffer size expected: "+std::to_string(key_len)+"\nBuffer written: "+std::to_string(_bytes_written)+"\033[0m");
@@ -80,7 +80,7 @@ namespace tancrypt
       return key_der;
     }
   
-    std::vector<unsigned char> pkic::getPubDER()
+    dutils::dbuffer pkic::getPubDER()
     {
       if(key_container==nullptr)
       {
@@ -96,7 +96,7 @@ namespace tancrypt
         return {};     
       }
 
-      std::vector<unsigned char> key_der(key_len);
+      dutils::dbuffer key_der(key_len);
       unsigned char* pkey = key_der.data();
       int _bytes_written = i2d_PublicKey(key_container, &pkey);
 

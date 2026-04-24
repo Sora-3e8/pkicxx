@@ -7,7 +7,6 @@
 
 namespace tancrypt
 { 
-  std::string hexStr(const std::vector<unsigned char> &data);
   namespace AES{};
   namespace RSA{};
 }
