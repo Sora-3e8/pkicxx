@@ -43,7 +43,7 @@ int main()
 
   // Check results compared original, hex x  encrypted
   std::cout << "Original:" << std::endl;
-  std::cout << my_message.toStr() << std::endl;
+  std::cout << payload.toStr() << std::endl;
   std::cout << "Hex:" << std::endl;
   std::cout << dutils::hexStr(payload) << std::endl;
   std::cout << "Encrypted:" << std::endl;
