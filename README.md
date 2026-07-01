@@ -35,21 +35,24 @@ Example usage
 
 int main()
 {
-  // Databuffer from string
-  dutils::dbuffer payload("Hewwo, I am secret ^.^");
+  // Makes life easier 
+  using namespace tancrypt;
 
-  // Keypair with key size of 2048 gets generated and our buffer gets encrypted
-  tancrypt::RSA::pkic key;
+  // Keypair generation
+  RSA::pkic key;
   key.generate_keypair(2048);
-  dutils::dbuffer res = tancrypt::RSA::encrypt(key,payload);
 
-  // Check results compared original, hex x  encrypted
-  std::cout << "Original:" << std::endl;
-  std::cout << payload.toStr() << std::endl;
-  std::cout << "Hex:" << std::endl;
-  std::cout << dutils::hexStr(payload) << std::endl;
-  std::cout << "Encrypted:" << std::endl;
-  std::cout << dutils::hexStr(res) << std::endl;
+  // Preparing example buffer from string
+  dutils::dbuffer data_in("Hewwo, I am secret ^.^");
+
+  // Encrypting data
+  dutils::dbuffer encrypted_buffer = RSA::encrypt(key,data_in);
+
+  // You can check the results via helper function dutils::hexStr
+  std::cout << "Original:" << data_in.toStr()<< std::endl;
+  std::cout << "Original(hex):" << dutils::hexStr(data_in) << std::endl;
+  std::cout << "Encrypted:" << encrypted_buffer.toStr() << std::endl;
+  std::cout << "Encrypted(hex):" << dutils::hexStr(encrypted_buffer) << std::endl;
 
   return 0;
 }
