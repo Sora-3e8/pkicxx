@@ -30,7 +30,8 @@ cmake -DCMAKE_BUILD_TYPE=Release .. && cmake --build .
 Example usage
 --------------------------------------------------------------------------
 ```cpp
-#include "tancrypt.hpp"
+#include <iostream>
+#include "tancrypt/rsa.hpp"
 
 int main()
 {
