@@ -1,6 +1,6 @@
-#include "tancrypt-aes.hpp"
-#include "tancrypt-aes-keyc.hpp"
-#include "tancrypt-hash.hpp"
+#include "aes.hpp"
+#include "keyc.hpp"
+#include "hash.hpp"
 #include "openssl/evp.h"
 #include "openssl/err.h"
 #include "openssl/rand.h"
@@ -72,7 +72,7 @@ namespace tancrypt
     // Offset pointer to the buffer where we write the actual encrypted data, only after IV buffer
     unsigned char* out_buf = aes_data.data()+iv_len;
     // 16KB chunk
-    int chunk_size = (16*1024);
+    int chunk_size = 2048;
     // Irregular chunk size
     int remainder = buffer.size()%chunk_size;
     // Regular chunk count
@@ -194,7 +194,7 @@ namespace tancrypt
     unsigned char* out_buf = aes_data.data();
     const unsigned char* input_buf = buffer.data()+iv_len;
     // 16KB chunk
-    int chunk_size = (16*1024);
+    int chunk_size = 2048;
     // Irregular chunk size
     int remainder = (buffer.size()-iv_len)%chunk_size;
     // Regular chunk count

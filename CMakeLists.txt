@@ -2,63 +2,50 @@ cmake_minimum_required(VERSION 3.19)
 
 project(tancrypt VERSION 1.0.0 LANGUAGES CXX)
 
+option(DO_TEST "Toggle for unit tests [ON by default]" ON)
+
 include(GNUInstallDirs)
 file(GLOB_RECURSE SRC_FILES src/*.cc src/*.cpp)
 
-add_library(${PROJECT_NAME} SHARED ${SRC_FILES})
-
-# Qt properties add if needed - CMAKE_AUTOMOC,CMAKE_AUTORCC, CMAKE_AUTOUIC
-set_target_properties(${PROJECT_NAME}
-    PROPERTIES
-    CMAKE_CXX_STANDARD 11
-    CMAKE_CXX_STANDARD_REQUIRED ON
-    #VERSION ${PROJECT_VERSION}
-    #SOVERSION ${PROJECT_VERSION_MAJOR}
-)
-
-# __DEBUG__ macro for logging etc..
-target_compile_definitions(${PROJECT_NAME} PRIVATE $<$<CONFIG:Debug>:__DEBUG__>)
+add_library(${PROJECT_NAME} INTERFACE)
 
 target_compile_options(${PROJECT_NAME}
-  PRIVATE
+  INTERFACE
   $<$<CONFIG:Debug>: -Wall -Wextra -Wpedantic>
   $<$<CONFIG:Release>: -O3>
 )
 
-# Dependency lookup, replace PACKAGE_NAME by your package
-find_package(OpenSSL REQUIRED Crypto)
+file(GLOB_RECURSE SHARED_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc)
+target_sources(${PROJECT_NAME} INTERFACE ${SHARED_SRCS})
 
-# PkgConfig setup
-#find_package(PkgConfig)
-#pkg_check_modules(VAR_NAME REQUIRED IMPORTED_TARGET package_name)
 
-# Report missing dependencies to user
-if(NOT OpenSSL_FOUND)
-  message(FATAL_ERROR "Could not find OpenSSL required components: Crypto")
-endif()
-
-target_include_directories(${PROJECT_NAME}
-  PUBLIC
-  "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
-  "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
- )
-
-target_link_libraries("${PROJECT_NAME}" PRIVATE OpenSSL::Crypto )
-
-install(TARGETS ${PROJECT_NAME}
-  EXPORT "${PROJECT_NAME}Targets"
-  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/${PROJECT_NAME}
-  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}/${PROJECT_NAME}
-  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}/${PROJECT_NAME}
-  INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
+file(GLOB_RECURSE COPY_HEADERS
+  ${CMAKE_CURRENT_SOURCE_DIR}/aes/include/*.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/aes/include/*.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/hash/include/*.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/hash/include/*.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/rsa/include/*.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/rsa/include/*.hpp
 )
 
-install(DIRECTORY include/${PROJECT_NAME}
-   DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-   FILES_MATCHING
-   PATTERN "*.h"
-   PATTERN "*.hpp"
- )
+file(COPY ${COPY_HEADERS} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/include/${PROJECT_NAME}/)
+
+add_subdirectory(aes)
+add_subdirectory(hash)
+add_subdirectory(rsa)
+
+target_include_directories(${PROJECT_NAME} INTERFACE
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
+  $<INSTALL_INTERFACE:include/${PROJECT_NAME}>
+)
+
+target_link_libraries(${PROJECT_NAME} INTERFACE aes)
+target_link_libraries(${PROJECT_NAME} INTERFACE hash)
+target_link_libraries(${PROJECT_NAME} INTERFACE rsa)
+
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/dutils.hpp DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/tancrypt/)
+
 
 install(EXPORT "${PROJECT_NAME}Targets"
   FILE "${PROJECT_NAME}Targets.cmake"
@@ -68,10 +55,19 @@ install(EXPORT "${PROJECT_NAME}Targets"
 
 include(CMakePackageConfigHelpers)
 message("Directory is: ${CMAKE_CURRENT_BINARY_DIR}")
+
 configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
-  "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/tancryptConfig.cmake"
   INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
 )
 
-enable_testing()
-add_subdirectory(tests)
+
+install(FILES
+  "${CMAKE_CURRENT_BINARY_DIR}/tancryptConfig.cmake"
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+)
+
+if(${CMAKE_CURRENT_SOURCE_DIR} STREQUAL ${CMAKE_SOURCE_DIR} AND DO_TEST)
+ enable_testing()
+ add_subdirectory(tests)
+ endif()

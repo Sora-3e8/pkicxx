@@ -1,6 +1,6 @@
-#include "tancrypt-hash.hpp"
-#include "tancrypt-hashtypes.hpp"
-#include "tancrypt-pkic.hpp"
+#include "hash.hpp"
+#include "hashtypes.hpp"
+#include "pkic.hpp"
 #include <openssl/evp.h>
 #include <openssl/engine.h>
 #include <openssl/rsa.h>

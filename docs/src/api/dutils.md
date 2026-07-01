@@ -1,51 +1,76 @@
 # Dutils
 
+## Overview
 Helpful utilities, provides custom data buffer and data utility functions.  
 
-## `dutils::dbuffer`
-Useful class for storing data it's based on `#!cpp std::vector<unsigned char>`, main advantage is that dutils::dbuffer provides easy conversion from string and back.
+## Dbuffer
+Useful class for storing data, based on `#!cpp std::vector<unsigned char>`.  
+Has an easy conversion method from string and back.
 
+### Constructors
 
-## `dutils::dbuffer constructors`
-Dbuffer supports various construction methods.
+</br>
 
-### `#!cpp dutils::dbuffer(std::initializer_list<unsinged int> list)`
+#### Initializer list
 Equivalent to `#!cpp std::vector<unsigned char> buffer = {1,2,3...};`
+
+<h4><code>dutils::dbuffer(std::initializer_list<unsinged int> list)</code></h4>
 
 * **Parameters:**
     * `#!cpp std::initializer_list<unsigned int> list` - Input data
-* **Returns:**
-    * `#!cpp dutils::dbuffer buffer`
 
-### `#!cpp dutils::dbuffer(std::vector<unsigned char> dbuffer)`
+</br>
+
+#### Vector
 Copies data from `#!cpp std::vector<unsigned char>` to newly created blank dbuffer,
 this is primarily for compatibility purposes, but direct construction of `#!cpp dutils::dbuffer` is more efficient.
 
+<h4><code>dutils::dbuffer(std::vector<unsigned char> dbuffer)</code></h4>
+
 * **Parameters:**
     * `#!cpp std::vector<unsinged char> buffer` - Buffer to copy
-* **Returns:**
-    * `#!cpp dutils::dbuffer buffer`
-    
-## `#!cpp dutils::dbuffer` Member methods
 
-### `#!cpp dutils::dbuffer::toStr()`
+</br>
+
+#### String
+Initializes buffer and copies the string into it.
+
+<h4><code>dutils::dbuffer(std::string s_data)</code></h4>
+ 
+* **Parameters:**
+    * `#!cpp std::string s_data` - String to copy
+
+</br>
+</br>
+
+### Methods
+
+#### toStr
 !!! Warning
     Please note that the dbuffer contents are not checked for string safety,
     thus when converting you must handle possible nullterminators yourself.
-Converts dbuffer contents to string
+
+Returns content of the buffer in form of string
+
+<h4><code>dutils::dbuffer::toStr()</code></h4>
 
 * **Parametrs:**
 * **Returns:**
     * `#!cpp std::string buffer_stringified`
 
-## `#!cpp dutils::hexStr`
+</br>
+</br>
+
+## hexStr
 This function provides an easy way to convert data into string interpretation of hex values.  
 Useful when you want to print out or compare buffers with non-string data.  
 
-### `#!cpp dutils::hexStr(const dutils::dbuffer &data)`
+<h3><code>dutils::hexStr(const dutils::dbuffer &data)</code></h3>
 
 * **Parameters:**
     * `#!cpp const dutils::dbuffer &data` - The input data buffer.
 * **Returns:**
-    * `#!cpp std::string` - A formatted hex string (16 blocks per row).
+    * `#!cpp std::string` - A formatted hex string
 
+</br>
+</br>

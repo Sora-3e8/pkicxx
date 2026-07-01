@@ -1,111 +1,108 @@
 # RSA
 
 ## Overview
-Sub-namespace `#!cpp tancrypt::RSA` provides basic cryptographic functions and pulls in `#!cpp tancrypt::RSA::pkic` as required dependency.
+Provides basic RSA cryptographic operations, depends on [PKIC](pkic.md).
 
-All provided functions are provided as static stateless functions, this simplifies their usage.
+## Encrypt
+Is a static stateless function, which uses a PKIC as Public Key.  
+Takes the buffer by reference and returns a new encrypted copy of the data.
 
-</br>
-</br>
-</br>
-</br>
+<h3><code>RSA::encrypt(pkic& key,dutils::dbuffer& payload)</code></h3>
 
-## `#!cpp RSA::encrypt`
-### `#!cpp RSA::encrypt(pkic& key,dutils::dbuffer& payload)`
 * **Parameters:**
     * `#!cpp tancrypt::RSA::pkic key` - Key container (priv/pubkey must be loaded)
     * `#!cpp dutils::dbuffer& payload` - Data buffer to encrypt
 * **Returns:**
     * `#!cpp dutils::dbuffer` - Encrypted data buffer
 
-### Encrypt example
-```cpp linenums="1"
-#include "tancrypt.hpp"
+In case of a failure throws an exception.
 
-int main()
-{
-  // Keypair generation
-  tancrypt::RSA::pkic key;
-  key.generate_keypair(2048);
-
-  // Preparing example buffer from string
-  dutils::dbuffer payload("Hewwo, I am secret ^.^");
-
-  // Encrypting data
-  dutils::dbuffer res = tancrypt::RSA::encrypt(key,payload);
-
-  // Debug write into console to see the results
-  std::cout << "Original:" << std::endl;
-  std::cout << payload.toStr()<< std::endl;
-  std::cout << "Hex::" << std::endl;
-  std::cout << dutils::hexStr(payload) << std::endl;
-  std::cout << "Encrypted:" << std::endl;
-  std::cout << dutils::hexStr(res) << std::endl;
-
-  return 0;
-}
-```
-</br>
-</br>
-</br>
 </br>
 
-## `#!cpp RSA::decrypt`
-### `#!cpp RSA::decrypt(pkic& key,dutils::dbuffer& payload)`
+???+ example
+    ```cpp
+    #include <iostream>
+    #include "tancrypt/rsa.hpp"
+
+    int main()
+    {
+      // Makes life easier 
+      using namespace tancrypt;
+    
+      // Keypair generation
+      RSA::pkic key;
+      key.generate_keypair(2048);
+
+      // Preparing example buffer from string
+      dutils::dbuffer data_in("Hewwo, I am secret ^.^");
+
+      // Encrypting data
+      dutils::dbuffer encrypted_buffer = RSA::encrypt(key,data_in);
+
+      // You can check the results via helper function dutils::hexStr
+      std::cout << "Original:" << data_in.toStr()<< std::endl;
+      std::cout << "Original(hex):" << dutils::hexStr(data_in) << std::endl;
+      std::cout << "Encrypted:" << encrypted_buffer.toStr() << std::endl;
+      std::cout << "Encrypted(hex):" << dutils::hexStr(encrypted_buffer) << std::endl;
+
+      return 0;
+    }
+    ```
+
+</br>
+
+## Decrypt
+Is a static stateless function, which uses a PKIC as Private Key.  
+Takes the buffer by reference and returns a new decrypted copy of the data.
+
+<h3><code>RSA::decrypt(pkic& key,dutils::dbuffer& payload)</code></h3>
+
 * **Parameters:**
     * `#!cpp tancrypt::RSA::pkic& key` - Key container (Must contain private key)
     * `#!cpp dutils::dbuffer& payload` - Encrypted data buffer
 * **Returns:**
     * `#!cpp dutils::dbuffer` - Decrypted data buffer
+
+In case of a failure throws an exception.
+
+</br>
+
+???+ example
+    ```cpp linenums="1"
+    #include <iostream>
+    #include "tancrypt/rsa.hpp"
+
+    int main()
+    {
+      // Makes life easier 
+      using namespace tancrypt;
     
+      RSA::pkic key;
+      // Loading the key from PEM file here
+      key.importPEM("my_path/key.pem");
+    
+      dutils::dbuffer data_in;
+      // Assuming whatever encrypted data was loaded into the dbuffer here
+      //...
 
-### Decrypt example
-```cpp linenums="1"
-#include "tancrypt.hpp"
+      // Decrypting the data
+      dutils::dbuffer decrypted_buffer = RSA::decrypt(key,data_in);
 
-int main()
-{
-  // Generating keypair
-  tancrypt::RSA::pkic key;
-  key.generate_keypair(2048);
+      // You can check the results via helper function dutils::hexStr
+      std::cout << "Decrypted(hex):" << dutils::hexStr(decrypted_buffer) << std::endl;
+      std::cout << "Decrypted:" << decrypted.toStr() << std::endl
 
-  // Preparing example data
-  dutils::dbuffer payload("Hewwo, I am secret ^.^");
-
-  // Encrypting the data
-  dutils::dbuffer res = tancrypt::RSA::encrypt(key,payload);
-
-  // Debug log into console - original unencrypted
-  std::cout << "Original:" << std::endl;
-  std::cout << payload.toStr() << std::endl;
-  std::cout << "Hex:" << std::endl;
-  std::cout << dutils::hexStr(payload) << std::endl;
-
-  // Debug log into console - after encrypting  
-  std::cout << "Encrypted:" << std::endl;
-  std::cout << dutils::hexStr(res) << std::endl;
-
-
-  // Decrypting the data
-  dutils::dbuffer res_decrypted = tancrypt::RSA::decrypt(key,res);
-
-  // Debug log into console - after decrypting
-  std::cout << "Res decrypted hex:"<< std::endl;
-  std::cout << dutils::hexStr(res_decrypted) << std::endl;
-  std::cout << "Res decrypted:" << std::endl;
-  std::cout << res_decrypted.data() << std::endl
-
-  return 0;
-}
-```
-</br>
-</br>
-</br>
+      return 0;
+    }
+    ```
 </br>
 
-## `#!cpp RSA::sign`
+## Sign
+Is a static stateless function, takes PKIC and hashing algorithm of your choice.  
+Takes the buffer by reference and returns a new cryptographic signature.
 
-### `#!cpp RSA::sign(pkic& key,dutils::dbuffer &buffer, hashAlg alg)`
+<h3><code>RSA::sign(pkic& key,dutils::dbuffer &buffer, hashAlg alg)</code></h3>
+
 * **Parameters:**
     * `#!cpp tancrypt::RSA::pkic key` - key container (must contain private key)
     * `#!cpp dutils::dbuffer &buffer` - The data to be signed
@@ -113,36 +110,44 @@ int main()
 * **Returns:**
     * `#!cpp dutils::dbuffer` - Data signature
 
-### Signature example
-```cpp linenums="1"
-#include "tancrypt.hpp"
 
-int main()
-{
-  tancrypt::RSA::pkic key_store;
-  key_store.generate_keypair(2048);
+???+ example
+    ```cpp linenums="1"
+    #include <iostream>
+    #include "tancrypt/rsa.hpp"
 
-  std::string message = "I confirm this transaction.";
-  dutils::dbuffer data(message.begin(), message.end());
+    int main()
+    {
 
-  // Signing the data using SHA256
-  dutils::dbuffer signature = tancrypt::RSA::pki::sign(key_store, data, tancrypt::hashAlg::SHA256);
+      // Makes life easier 
+      using namespace tancrypt;
+    
+      RSA::pkic key;
+      key.generate_keypair(2048);
 
-  std::cout << "Signature (Hex):" << std::endl;
-  std::cout << tancrypt::hexStr(signature) << std::endl;
+      std::string message = "I confirm this transaction.";
+      dutils::dbuffer data_in(message);
 
-  return 0;
-}
-```
+      // Signing the data using SHA256
+      dutils::dbuffer signature = RSA::sign(key, data_in, hashAlg::SHA256);
+
+      // You can check the results via helper function dutils::hexStr
+      std::cout << "Signature (Hex):" << dutils::hexStr(signature) << std::endl;
+
+      return 0;
+    }
+    ```
 </br>
-</br>
-</br>
-</br>
 
-## `RSA::verify`
+## Verify
+Is a static stateless function, which takes PKIC, data, hashing algorithm and original data.  
+This function verifies the signature against  original data.
+
 !!! note
     Algorithm choice must match the algorithm which was used to sign the data, otherwise the operation will fail.
-### `RSA::verify(pkic& key, dutils::dbuffer&sig, dutils::dbuffer &buffer, hashAlg alg)`
+    
+<h3><code>RSA::verify(pkic& key, dutils::dbuffer&sig, dutils::dbuffer &buffer, hashAlg alg)</code></h3>
+
 * **Parameters:**
     * `#!cpp tancrypt::RSA::pkic& key` - key container (must contain public key)
     * `#!cpp dutils::dbuffer &sig` - Singature data buffer
@@ -151,26 +156,37 @@ int main()
 * **Returns:**
     * `#!cpp bool` - Signature matches data (returns `#!cpp true` if valid)
 
-### Verify signature example
-```cpp linenums="1"
-#include "tancrypt.hpp"
+???+ example
+    ```cpp linenums="1"
+    #include <iostream>
+    #include "tancrypt.hpp"
 
-int main()
-{
-  // Assuming 'key_store' contains public key, 'signature' and 'data' contain valid data
-  bool is_valid = tancrypt::RSA::pki::verify(key_store, signature, data, tancrypt::hashAlg::SHA256);
+    int main()
+    {
+      // Makes life easier 
+      using namespace tancrypt;
 
-  if (is_valid) {
-      std::cout << "Signature is authentic!" << std::endl;
-  } else {
-      std::cout << "Signature verification failed." << std::endl;
-  }
+      RSA::pkic key;
+      // Loading the key from PEM file here
+      key.importPEM("my_path/key.pem");
 
-  return 0;
-}
-```
-</br>
-</br>
+      dutils::dbuffer data_in;
+      // Assuming whatever data was loaded into the dbuffer here
+      //...
+
+      dutils::dbuffer signature;
+      // Assuming whatever signature data was loaded into the dbuffer here
+      //...
+
+      bool is_valid = RSA::verify(key, signature, data_in, hashAlg::SHA256);
+
+      // Tenary shows us the result
+      std::cout << ( (is_valid) ? "Signature is authentic!" : "Signature verification failed") << std::endl;
+
+      return 0;
+    }
+    ```
+
 </br>
 </br>
 

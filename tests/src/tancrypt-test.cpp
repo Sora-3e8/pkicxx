@@ -1,13 +1,13 @@
 #include <iostream>
-#include <iostream>
 #include <functional>
-#include "tancrypt-hashtypes.hpp"
-#include "tancrypt.hpp"
+#include "tancrypt/aes.hpp"
+#include "tancrypt/hash.hpp"
+#include "tancrypt/rsa.hpp"
 
 int pkicInit(char* argv[], int argc)
 {
   tancrypt::RSA::pkic key_factory;
-  
+
   return 0;
 }
 

@@ -1,9 +1,10 @@
 #ifndef TANCRYPT_AES_KEYC
 #define TANCRYPT_AES_KEYC
 
+#include <openssl/evp.h>
 #include <vector>
 #include <map>
-#include "tancrypt-hashtypes.hpp"
+#include "hashtypes.hpp"
 #include "dutils.hpp"
 
 struct evp_cipher_st;
@@ -36,7 +37,9 @@ namespace tancrypt
 
       return m;
     }
-    
+
+    static int RefKeylen(AES::Type type);
+        
     class keyc
     {
       public:
@@ -51,7 +54,6 @@ namespace tancrypt
         const hashAlg getHashAlg();
         const bool getHashEnabled();
         void setKey(const dutils::dbuffer &key);
-        int getCiphKLen();
         const dutils::dbuffer &getKey();
         evp_cipher_st* cipher = nullptr;
         

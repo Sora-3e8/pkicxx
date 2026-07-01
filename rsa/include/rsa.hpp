@@ -1,5 +1,5 @@
-#include "tancrypt-pkic.hpp"
-#include "tancrypt-hashtypes.hpp"
+#include "pkic.hpp"
+#include "hashtypes.hpp"
 #include "dutils.hpp"
 
 extern "C" struct evp_pkey_st;

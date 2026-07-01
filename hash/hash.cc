@@ -1,7 +1,7 @@
 #include <openssl/evp.h>
 #include <openssl/err.h>
 #include <stdexcept>
-#include "tancrypt-hash.hpp"
+#include "hash.hpp"
 
 namespace tancrypt
 {

@@ -2,7 +2,6 @@
 #define TANCRYPT_RSA_PKIC_HPP
 
 #include <string>
-#include <vector>
 #include "dutils.hpp"
 
 extern "C" struct evp_pkey_st;

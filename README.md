@@ -14,15 +14,16 @@ Features
 
 Documentation
 --------------------------------------------------------------------------
-https://sora-3e8.github.io/tancrypt
+https://sora3e8.github.io/tancrypt
 
 Dependencies
 --------------------------------------------------------------------------
 - OpenSSL3.0+
 
-# Build
+Build
+--------------------------------------------------------------------------
 ```bash
-git clone https://github.com/Sora-3e8/tancrypt && cd build
+git clone https://github.com/Sora3e8/tancrypt && cd build
 cmake -DCMAKE_BUILD_TYPE=Release .. && cmake --build .
 ```
 

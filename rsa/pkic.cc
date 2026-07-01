@@ -5,7 +5,7 @@
 #include <openssl/evp.h>
 #include <openssl/pem.h>
 #include <openssl/err.h>
-#include "tancrypt-pkic.hpp"
+#include "pkic.hpp"
 #include <sstream>
 #include <fstream>
 #include <iostream>

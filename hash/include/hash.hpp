@@ -1,7 +1,7 @@
 #ifndef TANCRYPT_HASH_HPP
 #define TANCRYPT_HASH_HPP
 
-#include "tancrypt-hashtypes.hpp"
+#include "hashtypes.hpp"
 #include <vector>
 #include "dutils.hpp"
 

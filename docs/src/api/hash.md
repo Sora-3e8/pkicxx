@@ -1,60 +1,69 @@
 # Hash
 
 ## Overview
-!!! note "Algorithm support"
-    The supported OpenSSL algorithms are limited to those mapped in enum class hashAlg.  
-    This prevents errors from requesting unsupported or non-existent algorithms.
-
-This component provides the hashing functionality required for `#!cpp RSA::sign` and `#!cpp RSA::verify`, but it can also be used as a standalone hasher.
+Provides the hashing functionality required for `#!cpp RSA::sign` and `#!cpp RSA::verify`, but it can also be used as a standalone hasher.
 Supported algorithms are directly provided by OpenSSL.
 
-
-Extends the `#!cpp namespace pkicxx` without a sub-namespace.
-
-</br></br>
-
-## `#!cpp enum class tancrypt::hashAlg : int`
-
-This enum class is used as hashAlg type, it allows better type safety and decreases amount of errors caused by typos
-
-### Available algorithms
-- `hashAlg::MDC2`
-- `hashAlg::MD4`
-- `hashAlg::MD5`
-- `hashAlg::SHA1`
-- `hashAlg::RSA_SHA1`
-- `hashAlg::SHA224`
-- `hashAlg::SHA256`
-- `hashAlg::SHA384`
-- `hashAlg::SHA512`
-- `hashAlg::SHA512_224`
-- `hashAlg::SHA512_256`
-- `hashAlg::SM3`
-- `hashAlg::BLAKE2B512`
-- `hashAlg::BLAKE2S256`
-
-
-</br></br>
-
-## `#!cpp tancrypt::hash`
+## Hash
 Provides hashing functionality required for sign and verify functions,  
 but can be also used independently.
 
-### `#!cpp tancrypt::hash(dutils::dbuffer& data,hashAlg alg)`
+<h3><code>tancrypt::hash(dutils::dbuffer& data,hashAlg alg)</code></h3>
+
 * **Parameters:**
     * `#!cpp dutils::dbuffer& data` - Data buffer to hash
     * `#!cpp tancrypt::hashAlg alg` - Algorithm to use for the digest.
 * **Returns:**
     * `dutils::dbuffer data` - Hashed data buffer
 
-</br></br>
+???+ example
+    ```cpp
+    #include <iostream>
+    #include "tancrypt/hash.hpp"
 
-## `#!cpp _hashTypeMap`
-Internal function that returns internal **`#!cpp std::map`**, which maps enums to the OpenSSL algorithm names
+    int main()
+    {
+      // Data setup
+      dutils::dbuffer payload("Hewwo, I am secret ^.^");
 
-### `#!cpp static const std::map<int,const char>& _hashTypeMap()`
-* **Parameters:**
-* **Returns:**
-    * `#!cpp static const std::map<int,const char*>&` - Map of `#!cpp enum : int` values to `#!cpp char*` names of the algorithms
+      // Data gets hashed here  
+      dutils::dbuffer hashed_payload = tancrypt::hash(payload,tancrypt::hashAlg::SHA256);
 
-</br></br>
+      // You can check the results via helper function dutils::hexStr
+      std::cout << "Original:" << payload.toStr() << std::endl;
+      std::cout << "Original(hex):" << dutils::hexStr(payload) << std::endl;
+      std::cout << "Hashed:" << hashed_payload.toStr() << std::endl;
+      std::cout << "Hashed(hex):" << dutils::hexStr(hashed_payload) << std::endl;
+
+      return 0;
+    }
+    ```
+
+## hashAlg
+Enum class used as hash type.
+
+<h3><code class="language-cpp highlight">enum class tancrypt::hashAlg : int</code></h3>
+
+</br>
+
+<h4> Available algorithms:</h4>
+
+| Enum Constant | Hashing algorithm | Digest Size |   |
+| :--- | :---: | :---: | :---: |
+`hashAlg::MDC2` | MDC-2 | 128-bit | <span class="md-code__button"  title="Copy to clipboard" data-clipboard-text="hashAlg::MDC2" data-md-type="copy"></span> |
+`hashAlg::MD4` | MD4 | 128-bit | <span class="md-code__button"  title="Copy to clipboard" data-clipboard-text="hashAlg::MD4" data-md-type="copy"></span> |
+`hashAlg::MD5` | MD5 | 128-bit | <span class="md-code__button"  title="Copy to clipboard" data-clipboard-text="hashAlg::MD5" data-md-type="copy"></span> |
+`hashAlg::SHA1` | SHA-1 | 160-bit | <span class="md-code__button"  title="Copy to clipboard" data-clipboard-text="hashAlg::SHA1" data-md-type="copy"></span> |
+`hashAlg::RSA_SHA1` | RSA-SHA1 | 160-bit | <span class="md-code__button"  title="Copy to clipboard" data-clipboard-text="hashAlg::RSA_SHA1" data-md-type="copy"></span> |
+`hashAlg::SHA224` | SHA-224 | 224-bit | <span class="md-code__button"  title="Copy to clipboard" data-clipboard-text="hashAlg::SHA224" data-md-type="copy"></span> |
+`hashAlg::SHA256` | SHA-256 | 256-bit | <span class="md-code__button"  title="Copy to clipboard" data-clipboard-text="hashAlg::SHA256" data-md-type="copy"></span> |
+`hashAlg::SHA384` | SHA-384 | 384-bit | <span class="md-code__button"  title="Copy to clipboard" data-clipboard-text="hashAlg::SHA384" data-md-type="copy"></span> |
+`hashAlg::SHA512` | SHA-512 | 512-bit | <span class="md-code__button"  title="Copy to clipboard" data-clipboard-text="hashAlg::SHA512" data-md-type="copy"></span> |
+`hashAlg::SHA512_224` | SHA-512-224 | 1024-bit | <span class="md-code__button"  title="Copy to clipboard" data-clipboard-text="hashAlg::SHA512_224" data-md-type="copy"></span> |
+`hashAlg::SHA512_256` | SHA-512-256 | 1024-bit | <span class="md-code__button"  title="Copy to clipboard" data-clipboard-text="hashAlg::SHA512_256" data-md-type="copy"></span> |
+`hashAlg::SM3` | ShangMi 3 | 512-bit | <span class="md-code__button"  title="Copy to clipboard" data-clipboard-text="hashAlg::SM3" data-md-type="copy"></span> |
+`hashAlg::BLAKE2B512` | BLAKE2B-512 | 1024-bit | <span class="md-code__button"  title="Copy to clipboard" data-clipboard-text="hashAlg::BLAKE2B512" data-md-type="copy"></span> |
+`hashAlg::BLAKE2S256` | BLAKE2S-256 | 1024-bit | <span class="md-code__button"  title="Copy to clipboard" data-clipboard-text="hashAlg::BLAKE2S256" data-md-type="copy"></span> |
+
+</br>
+</br>

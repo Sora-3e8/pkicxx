@@ -1,22 +1,19 @@
 site_name: Tancrypt docs
-repo_name: Sora-3e8/tancrypt
+repo_name: Sora3e8/tancrypt
 docs_dir: src/
 site_dir: site/
-repo_url: https://github.com/Sora-3e8/tancrypt
+repo_url: https://github.com/Sora3e8/tancrypt
 edit_uri: blob/main/docs/
 nav:
  - Home: index.md
- - Installation:
-   - From source: install/source.md
-   #- Packages: install/packages.md
-   #- Git submodule: install/git-submodule.md
- - API:
+ - Getting started: getting-started.md
+ - API reference:
    - AES:
      - Overview & operations: api/aes.md
-     - AES keyc: api/keyc.md
+     - AES Key Container: api/keyc.md
    - RSA:
      - Overview & Operations: api/rsa.md
-     - PKIC: api/pkic.md
+     - RSA Key Container: api/pkic.md
    - Hash: api/hash.md
    - Dutils: api/dutils.md
  - About:
@@ -28,8 +25,11 @@ markdown_extensions:
      anchor_linenums: true
      line_spans: __span
      pygments_lang_class: true
+ - pymdownx.tabbed:
+     alternate_style: true
  - pymdownx.inlinehilite
  - pymdownx.snippets
+ - pymdownx.keys
  - pymdownx.superfences
  - attr_list
 theme:
@@ -38,6 +38,10 @@ theme:
  name: material
  features:
    - content.code.copy
+   - navigation.indexes
+   - navigation.expand
+   - navigation.tracking
+   - toc.integrate
  extra_css:
    - stylesheets/extra.css
  style:

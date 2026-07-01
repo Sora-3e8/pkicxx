@@ -1,107 +1,88 @@
 # PKIC
 
 ## Overview
-!!! Note
-    Please note that newly created instance of `#!cpp RSA::pkic` is blank  
-    and needs to be initialized properly before it can be used.
+Public Key Infrastructure Container (PKIC) is a container for both private and public key.  
+Various methods of loading, generating and exporting the Keys are available.  
+PKIC keys are a raw cryptographic keys and do not hold any additional information like, subject etc...
 
-PKIC serves as a container, which stores and manages the RSA keys.</br>
-The PKIC by itself does not provide any cryptographic operations, it only provides the keys.
-`#!cpp class pkic` extends the `#!cpp namespace RSA` and is automatically included in the RSA header.
-
-If you wish to merely generate keypairs or load keypairs and manage them, you can include `tancrypt-pkic.hpp`
-as a standalone header.
-</br>
-</br>
-</br>
 </br>
 
 ## Constructor
-### tancrypt::RSA::pkic()
+Constructs a blank un-initialized instance of PKIC, which holds no keys.
+
+<h3><code>RSA::pkic()</code></h3>
+
 * **Parameters:**
-</br>
-</br>
-</br>
-</br>
 
-#### Initialization methods
-* Keypair generation
-* Load from DER
-* Load from PEM string
-* Load from PEM file
-</br>
-</br>
-</br>
-</br>
+## Binary loaders
+Load the RSA keys from DER binary format data buffer into PKIC.
 
-## DER loaders
-DER loaders, class methods that load RSA keys from DER data buffers
-
-### `#!cpp loadPrivDER(dutils::dbuffer& DER)`
-Loads private key from DER data buffer into the key container
+<h3><code>RSA::pkic::loadPrivDER(dutils::dbuffer& DER)</code></h3>
 
 * **Parameters:**
     * `#!cpp dutils::dbuffer& DER` - Private key data buffer in with DER format
-* **Returns:**
 
-### `#!cpp loadPubDER(dutils::dbuffer& DER)`
-Loads public key from DER data buffer into the key container
+<h3><code>RSA::pkic::loadPubDER(dutils::dbuffer& DER)</code></h3>
 
 * **Parameters:**
     * `#!cpp dutils::dbuffer& DER` - Public key data buffer in with DER format
-* **Returns:**
-</br>
-</br>
+
 </br>
 </br>
 
 ## PEM loaders
+Load the RSA keys from PEM format string into PKIC.
 
-### `#!cpp loadPEMStr()`
+<h3><code>RSA::pkic::loadPEMStr()</code></h3>
+
 * **Parameters:** `#!cpp const char* PEM` - PEM string to load
-* **Returns:**
 
-### `#!cpp importPEM()`
+<h3><code>RSA::pkic::importPEM()</code></h3>
+
 * **Parameters:** `#!cpp const char* file` - Path to file to load PEM string from
-* **Returns:**
-</br>
-</br>
+
 </br>
 </br>
 
 ## DER getters
+Return the RSA keys in DER binary format.
 
-### `#!cpp getPrivDER()`
+<h3><code>RSA::pkic::getPrivDER()</code></h3>
+
 * **Parameters:**
 * **Returns:**
     * `dutils::dbuffer& DER` - Private key DER data buffer
 
-### `#!cpp getPubDER()`
+
+<h3><code>RSA::pkic::getPubDER()</code></h3>
+
 * **Parameters:**
 * **Returns:**
     * `dutils::dbuffer& DER` - Public key DER data buffer
-</br>
-</br>
+
 </br>
 </br>
     
 ## PEM string getters
+Return the RSA keys in PEM string format.
 
-### `#!cpp getPrivPEM()`
+<h3><code>RSA::pkic::getPrivPEM()</code></h3>
+
 * **Parameters:**
 * **Returns:**
     * `#!cpp std::string` private key in form of PEM string
-    
-### `#!cpp getPublicPEM()`
+
+<h3><code>RSA::pkic::getPubPEM()</code></h3>
+
 * **Parameters:**
 * **Returns:**
     * `#!cpp std::string` public key in form of PEM string
     
-### `#!cpp getBundlePEM()`
+<h3><code>RSA::pkic::getBundlePEM()</code></h3>
+
 * **Parameters:**
 * **Returns:**
     * `#!cpp std::string` fullkey key in form of PEM string
-</br>
-</br>
+
 </br>
 </br>
