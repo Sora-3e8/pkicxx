@@ -1,17 +1,17 @@
 #ifndef TANCRYPT_AES_KEYC
 #define TANCRYPT_AES_KEYC
 
-#include <openssl/evp.h>
-#include <map>
-#include "hashtypes.hpp"
 #include "dutils.hpp"
+#include "hashtypes.hpp"
+#include <map>
+#include <openssl/evp.h>
 
 struct evp_cipher_st;
 
 namespace tancrypt
 {
   namespace AES
-  {    
+  {
     enum class Type : int
     {
       CBC128 = 0,
@@ -22,46 +22,44 @@ namespace tancrypt
       GCM256 = 5
     };
 
-    static const std::map<AES::Type,const char*>& _aesTypeMap()
+    inline const std::map<AES::Type, const char*>& _aesTypeMap()
     {
-      static const std::map<AES::Type,const char*> m =
-      {
-        {Type::CBC128,"AES-128-CBC"},
-        {Type::GCM128,"AES-128-GCM"},
-        {Type::CBC192,"AES-192-CBC"},
-        {Type::GCM192,"AES-192-GCM"},
-        {Type::CBC256,"AES-256-CBC"},
-        {Type::GCM256,"AES-256-GCM"}
+      static const std::map<AES::Type, const char*> m = {
+        { Type::CBC128, "AES-128-CBC" },
+        { Type::GCM128, "AES-128-GCM" },
+        { Type::CBC192, "AES-192-CBC" },
+        { Type::GCM192, "AES-192-GCM" },
+        { Type::CBC256, "AES-256-CBC" },
+        { Type::GCM256, "AES-256-GCM" }
       };
 
       return m;
     }
 
-    static int RefKeylen(AES::Type type);
-        
+    inline size_t RefKeylen(AES::Type type);
+
     class keyc
     {
       public:
         keyc();
         ~keyc();
-        keyc(const dutils::dbuffer& key,AES::Type type);
-        keyc(const dutils::dbuffer& key,AES::Type type,hashAlg alg);
-        
+        keyc(const dutils::dbuffer& key, AES::Type type);
+        keyc(const dutils::dbuffer& key, AES::Type type, hashAlg alg);
+
         void setType(AES::Type type);
         void setHashAlg(hashAlg alg);
         void setHashEnabled(bool val);
-        const hashAlg getHashAlg();
-        const bool getHashEnabled();
-        void setKey(const dutils::dbuffer &key);
-        const dutils::dbuffer &getKey();
+        hashAlg getHashAlg() const;
+        bool getHashEnabled() const;
+        void setKey(const dutils::dbuffer& key);
+        const dutils::dbuffer& getKey();
         evp_cipher_st* cipher = nullptr;
-        
-        
+
       private:
-        hashAlg _alg=hashAlg::SHA256;
-        bool do_hash=false;
+        hashAlg _alg = hashAlg::SHA256;
+        bool do_hash = false;
         dutils::dbuffer _key;
     };
-  }
-}
+  } // namespace AES
+} // namespace tancrypt
 #endif

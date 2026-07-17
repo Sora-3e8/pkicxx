@@ -1,8 +1,8 @@
 #ifndef TANCRYPT_RSA_PKIC_HPP
 #define TANCRYPT_RSA_PKIC_HPP
 
-#include <string>
 #include "dutils.hpp"
+#include <string>
 
 extern "C" struct evp_pkey_st;
 
@@ -15,22 +15,21 @@ namespace tancrypt
       public:
         pkic();
         ~pkic();
-      
+
         // PKIC pair generators
-        void generate_keypair(int length);
+        void generate_keypair(size_t length);
 
         operator evp_pkey_st*();
-
         bool isInitialized();
-            
+
         // DER loaders
-        void loadPrivDER(dutils::dbuffer &DER);
-        void loadPubDER(dutils::dbuffer &DER);
+        void loadPrivDER(dutils::dbuffer& DER);
+        void loadPubDER(dutils::dbuffer& DER);
 
         // DER getters
         dutils::dbuffer getPrivDER();
         dutils::dbuffer getPubDER();
-      
+
         // PEM loaders
         void importPEM(const char* file);
         void loadPEMStr(const char* PEM);
@@ -44,9 +43,10 @@ namespace tancrypt
         void exportPrivPEM(const char* file);
         void exportPubPEM(const char* file);
         void exportBundlePEM(const char* file);
+
       private:
-        ::evp_pkey_st *key_container = nullptr;
+        ::evp_pkey_st* key_container = nullptr;
     };
-  }
-}
-#endif 
+  } // namespace RSA
+} // namespace tancrypt
+#endif
