@@ -279,7 +279,7 @@ int Decrypt_test(char* argv[], int argc)
   std::cout << "Res decrypted hex:"<< std::endl;
   std::cout << dutils::hexStr(res_decrypted) << std::endl;
   std::cout << "Res decrypted:" << std::endl;
-  std::cout << res_decrypted.data() << std::endl;
+  std::cout << res_decrypted.toStr() << std::endl;
   if(dutils::hexStr(payload)==dutils::hexStr(res_decrypted)) return 0;
   
   return 1;

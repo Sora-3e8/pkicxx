@@ -26,6 +26,7 @@ file(GLOB_RECURSE COPY_HEADERS
   ${CMAKE_CURRENT_SOURCE_DIR}/hash/include/*.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/rsa/include/*.h
   ${CMAKE_CURRENT_SOURCE_DIR}/rsa/include/*.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/dutils.hpp
 )
 
 file(COPY ${COPY_HEADERS} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/include/${PROJECT_NAME}/)
@@ -67,7 +68,7 @@ install(FILES
   DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
 )
 
-if(${CMAKE_CURRENT_SOURCE_DIR} STREQUAL ${CMAKE_SOURCE_DIR} AND DO_TEST)
+if(${CMAKE_CURRENT_SOURCE_DIR} STREQUAL ${CMAKE_SOURCE_DIR})
  enable_testing()
  add_subdirectory(tests)
  endif()

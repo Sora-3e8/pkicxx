@@ -2,7 +2,6 @@
 #define TANCRYPT_AES_KEYC
 
 #include <openssl/evp.h>
-#include <vector>
 #include <map>
 #include "hashtypes.hpp"
 #include "dutils.hpp"
