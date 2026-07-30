@@ -13,6 +13,7 @@ target_compile_options(${PROJECT_NAME}
   INTERFACE
   $<$<CONFIG:Debug>: -Wall -Wextra -Wpedantic>
   $<$<CONFIG:Release>: -O3>
+  $<$<CONFIG:Profiling>: -O3 -pg>
 )
 
 file(GLOB_RECURSE SHARED_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc)
