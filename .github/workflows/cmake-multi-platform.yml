@@ -34,7 +34,7 @@ jobs:
           - os: ubuntu-latest
             c_compiler: cl
     steps:
-      - uses actions/checkout@v4
+      - uses: actions/checkout@v4
       - name Build:
         run:
           cmake -DCMAKE_BUILD_TYPE=Debug .. && cmake --build .
