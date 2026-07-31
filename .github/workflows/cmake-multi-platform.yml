@@ -38,7 +38,6 @@ jobs:
       - name: Install deps
         run: |
           if [ "${{ runner.os }}" = "Linux" ]; then
-            sudo apt-get update
             sudo apt-get install -y libssl-dev
           elif [ "${{ runner.os }}" = "Windows" ]; then
             choco install openssl
