@@ -13,24 +13,27 @@ add_library(${PROJECT_NAME} INTERFACE)
 
 if(NOT ${CMAKE_SYSTEM_PROCESSOR} MATCHES "(arm|aarch64)")
   if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-
-    if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-      target_compile_options(${PROJECT_NAME}
-      INTERFACE
-      $<$<CONFIG:Debug>: -Wall -fsanitize=address -fno-omit-frame-pointer>
-      $<$<CONFIG:Release>: -O3>
-      )
-    else()
-      target_compile_options(${PROJECT_NAME}
-      INTERFACE
-      $<$<CONFIG:Debug>: -Wall -Wextra -Wpedantic -fsanitize=address -fno-omit-frame-pointer>
-      $<$<CONFIG:Release>: -O3>
-      )
-
+    message("!!! Asan linked !!!")
+    add_compile_options(-fsanitize=address -fno-omit-frame-pointer)
     add_link_options(-fsanitize=address)
-    endif()
+  endif()
+
+  if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    target_compile_options(${PROJECT_NAME}
+    INTERFACE
+    $<$<CONFIG:Debug>: -Wall -fsanitize=address -fno-omit-frame-pointer>
+    $<$<CONFIG:Release>: -O3>
+    )
+  else()
+    target_compile_options(${PROJECT_NAME}
+    INTERFACE
+    $<$<CONFIG:Debug>: -Wall -Wextra -Wpedantic -fsanitize=address -fno-omit-frame-pointer>
+    $<$<CONFIG:Release>: -O3>
+    )
   endif()
 endif()
+
+
 
 file(GLOB_RECURSE SHARED_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc)
 target_sources(${PROJECT_NAME} INTERFACE ${SHARED_SRCS})
