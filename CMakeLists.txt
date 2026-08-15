@@ -9,7 +9,7 @@ file(GLOB_RECURSE SRC_FILES src/*.cc src/*.cpp)
 
 add_library(${PROJECT_NAME} INTERFACE)
 
-if(${CMAKE_CXX_COMPILER_ID} EQUAL "MSVC")
+if(${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
   target_compile_options(${PROJECT_NAME}
   INTERFACE
   $<$<CONFIG:Debug>: -Wall -Wpedantic>
