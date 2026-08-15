@@ -1,62 +1,61 @@
 #include "keyc.hpp"
 #include "hashtypes.hpp"
 #include <openssl/evp.h>
-#include <stdexcept>
 
 namespace tancrypt
 {
   namespace AES
   {
-    keyc::keyc(){}
-    
+    keyc::keyc() { }
+
     keyc::~keyc()
     {
       EVP_CIPHER_free(cipher);
     }
 
-    int RefKeylen(AES::Type type)
+    size_t RefKeylen(AES::Type type)
     {
-      
-      const EVP_CIPHER *tmp  = EVP_get_cipherbyname(_aesTypeMap().at(type));
-      return EVP_CIPHER_key_length(tmp);
+      const EVP_CIPHER* tmp = EVP_get_cipherbyname(_aesTypeMap().at(type));
+      int res = EVP_CIPHER_key_length(tmp);
+      return res < 0 ? 0 : res;
     }
-    
-    void keyc::setKey(const dutils::dbuffer &key)
+
+    void keyc::setKey(const dutils::dbuffer& key)
     {
-       _key = key;
+      _key = key;
     }
-    
+
     const dutils::dbuffer& keyc::getKey()
     {
       return _key;
     }
-    
-    keyc::keyc(const dutils::dbuffer& key,AES::Type type)
+
+    keyc::keyc(const dutils::dbuffer& key, AES::Type type)
     {
       setType(type);
       setKey(key);
     }
-    
-    keyc::keyc(const dutils::dbuffer& key,AES::Type type,hashAlg alg)
+
+    keyc::keyc(const dutils::dbuffer& key, AES::Type type, hashAlg alg)
     {
       setType(type);
       setKey(key);
       setHashAlg(alg);
       setHashEnabled(true);
     }
-    
+
     void keyc::setType(AES::Type type)
-    { 
-      if(cipher!=nullptr) EVP_CIPHER_free(cipher);
+    {
+      if (cipher != nullptr) EVP_CIPHER_free(cipher);
       cipher = EVP_CIPHER_fetch(NULL, _aesTypeMap().at(type), NULL);
     }
-    
+
     void keyc::setHashEnabled(bool val) { do_hash = val; }
-    
+
     void keyc::setHashAlg(hashAlg alg) { _alg = alg; }
-    
-    const bool keyc::getHashEnabled() { return do_hash; }
-    
-    const hashAlg keyc::getHashAlg() { return _alg; }
+
+    bool keyc::getHashEnabled() const { return do_hash; }
+
+    hashAlg keyc::getHashAlg() const { return _alg; }
   }
 }
