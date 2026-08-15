@@ -9,16 +9,20 @@ file(GLOB_RECURSE SRC_FILES src/*.cc src/*.cpp)
 
 add_library(${PROJECT_NAME} INTERFACE)
 
+target_link_options(${PROJECT_NAME} INTERFACE
+$<$<CONFIG:Debug>:-fsanitize=address>
+)
+
 if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   target_compile_options(${PROJECT_NAME}
   INTERFACE
-  $<$<CONFIG:Debug>: -Wall>
+  $<$<CONFIG:Debug>: -Wall -fsanitize=address -fno-omit-frame-pointer>
   $<$<CONFIG:Release>: -O3>
   )
 else()
   target_compile_options(${PROJECT_NAME}
   INTERFACE
-  $<$<CONFIG:Debug>: -Wall -Wextra -Wpedantic>
+  $<$<CONFIG:Debug>: -Wall -Wextra -Wpedantic -fsanitize=address -fno-omit-frame-pointer>
   $<$<CONFIG:Release>: -O3>
   )
 endif()
