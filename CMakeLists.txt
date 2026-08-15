@@ -9,11 +9,19 @@ file(GLOB_RECURSE SRC_FILES src/*.cc src/*.cpp)
 
 add_library(${PROJECT_NAME} INTERFACE)
 
-target_compile_options(${PROJECT_NAME}
+if(${CMAKE_CXX_COMPILER_ID} EQUAL "MSVC")
+  target_compile_options(${PROJECT_NAME}
+  INTERFACE
+  $<$<CONFIG:Debug>: -Wall -Wpedantic>
+  $<$<CONFIG:Release>: -O3>
+  )
+else()
+  target_compile_options(${PROJECT_NAME}
   INTERFACE
   $<$<CONFIG:Debug>: -Wall -Wextra -Wpedantic>
   $<$<CONFIG:Release>: -O3>
-)
+  )
+endif()
 
 file(GLOB_RECURSE SHARED_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc)
 target_sources(${PROJECT_NAME} INTERFACE ${SHARED_SRCS})
