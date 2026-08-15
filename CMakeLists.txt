@@ -4,6 +4,8 @@ project(tancrypt VERSION 1.0.0 LANGUAGES CXX)
 
 option(DO_TEST "Toggle for unit tests [ON by default]" ON)
 
+add_definitions(-D_DISABLE_VECTOR_ANNOTATION -D_DISABLE_STRING_ANNOTATION)
+
 include(GNUInstallDirs)
 file(GLOB_RECURSE SRC_FILES src/*.cc src/*.cpp)
 
