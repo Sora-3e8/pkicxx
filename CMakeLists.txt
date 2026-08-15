@@ -9,6 +9,8 @@ file(GLOB_RECURSE SRC_FILES src/*.cc src/*.cpp)
 
 add_library(${PROJECT_NAME} INTERFACE)
 
+target_compile_definitions(${PROJECT_NAME} INTERFACE -D_DISABLE_VECTOR_ANNOTATION -D_DISABLE_STRING_ANNOTATION)
+
 target_link_options(${PROJECT_NAME} INTERFACE
 $<$<CONFIG:Debug>:-fsanitize=address>
 )

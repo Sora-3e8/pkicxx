@@ -1,4 +1,5 @@
 add_executable(tancrypt-test src/tancrypt-test.cpp)
+target_compile_definitions(tancrypt-test INTERFACE -D_DISABLE_VECTOR_ANNOTATION -D_DISABLE_STRING_ANNOTATION)
 # Basic memory bug catcher
 target_compile_options(tancrypt-test PRIVATE -fsanitize=address -fno-omit-frame-pointer)
 target_link_options(tancrypt-test PRIVATE -fsanitize=address)
