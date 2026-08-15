@@ -203,7 +203,7 @@ bool verify(pkic &key, dutils::dbuffer &sig, dutils::dbuffer &buffer,
 
   dutils::dbuffer hashed_buffer = hash(buffer, alg);
 
-  if (EVP_PKEY_verify_init_ex2(ctx, alg_sig, NULL) <= 0) {
+  if (EVP_PKEY_verify_init(ctx) <= 0) {
     unsigned long _err = ERR_get_error();
     EVP_SIGNATURE_free(alg_sig);
     EVP_PKEY_CTX_free(ctx);
