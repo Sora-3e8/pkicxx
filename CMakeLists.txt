@@ -4,17 +4,33 @@ project(tancrypt VERSION 1.0.0 LANGUAGES CXX)
 
 option(DO_TEST "Toggle for unit tests [ON by default]" ON)
 
+add_definitions(-D_DISABLE_VECTOR_ANNOTATION -D_DISABLE_STRING_ANNOTATION)
+
 include(GNUInstallDirs)
 file(GLOB_RECURSE SRC_FILES src/*.cc src/*.cpp)
 
 add_library(${PROJECT_NAME} INTERFACE)
 
-target_compile_options(${PROJECT_NAME}
-  INTERFACE
-  $<$<CONFIG:Debug>: -Wall -Wextra -Wpedantic>
-  $<$<CONFIG:Release>: -O3>
-  $<$<CONFIG:Profiling>: -O3 -pg>
-)
+if(NOT ${CMAKE_SYSTEM_PROCESSOR} MATCHES "(arm|aarch64)")
+  if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+
+    if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+      target_compile_options(${PROJECT_NAME}
+      INTERFACE
+      $<$<CONFIG:Debug>: -Wall -fsanitize=address -fno-omit-frame-pointer>
+      $<$<CONFIG:Release>: -O3>
+      )
+    else()
+      target_compile_options(${PROJECT_NAME}
+      INTERFACE
+      $<$<CONFIG:Debug>: -Wall -Wextra -Wpedantic -fsanitize=address -fno-omit-frame-pointer>
+      $<$<CONFIG:Release>: -O3>
+      )
+
+    add_link_options(-fsanitize=address)
+    endif()
+  endif()
+endif()
 
 file(GLOB_RECURSE SHARED_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc)
 target_sources(${PROJECT_NAME} INTERFACE ${SHARED_SRCS})
@@ -48,7 +64,6 @@ target_link_libraries(${PROJECT_NAME} INTERFACE rsa)
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/dutils.hpp DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/tancrypt/)
 
-
 install(EXPORT "${PROJECT_NAME}Targets"
   FILE "${PROJECT_NAME}Targets.cmake"
   NAMESPACE "${PROJECT_NAME}::"
@@ -62,7 +77,6 @@ configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
   "${CMAKE_CURRENT_BINARY_DIR}/tancryptConfig.cmake"
   INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
 )
-
 
 install(FILES
   "${CMAKE_CURRENT_BINARY_DIR}/tancryptConfig.cmake"

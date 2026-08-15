@@ -15,7 +15,7 @@ set_target_properties(${PROJECT_NAME}
 )
 
 # Dependency lookup, replace PACKAGE_NAME by your package
-find_package(OpenSSL REQUIRED Crypto)
+find_package(OpenSSL 3.0 REQUIRED Crypto)
 
 # Report missing dependencies to user
 if(NOT OpenSSL_FOUND)

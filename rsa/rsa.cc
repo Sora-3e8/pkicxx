@@ -131,7 +131,7 @@ namespace tancrypt
         throw std::runtime_error("[tancrypt::RSA::sign] Could not init signature algorithm.\nError " + std::to_string(_err) + ", " + ERR_reason_error_string(_err));
       }
 
-      if (EVP_PKEY_sign_init_ex2(ctx, alg_sig, NULL) <= 0)
+      if (EVP_PKEY_sign_init(ctx) <= 0)
       {
         int _err = ERR_get_error();
         EVP_PKEY_CTX_free(ctx);
@@ -191,7 +191,7 @@ namespace tancrypt
 
       dutils::dbuffer hashed_buffer = hash(buffer, alg);
 
-      if (EVP_PKEY_verify_init_ex2(ctx, alg_sig, NULL) <= 0)
+      if (EVP_PKEY_verify_init(ctx) <= 0)
       {
         unsigned long _err = ERR_get_error();
         EVP_SIGNATURE_free(alg_sig);
@@ -223,5 +223,5 @@ namespace tancrypt
       return (res == 0);
     }
 
-  }
-}
+  } // namespace RSA
+} // namespace tancrypt

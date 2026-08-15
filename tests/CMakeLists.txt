@@ -49,7 +49,8 @@ add_test(NAME "AES encrypt v2" COMMAND ${PROJECT_NAME} --aesEncryptV2)
 add_test(NAME "AES decrypt v1" COMMAND ${PROJECT_NAME} --aesDecryptV1)
 add_test(NAME "AES decrypt v2" COMMAND ${PROJECT_NAME} --aesDecryptV2)
 add_test(NAME "AES get nonce" COMMAND ${PROJECT_NAME} --getNonce)
+
 if(DO_TEST)
-  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure)
-  endif()
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_CTEST_COMMAND} -C Debug --output-on-failure)
+endif()
 
