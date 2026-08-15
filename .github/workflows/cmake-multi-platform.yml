@@ -45,6 +45,7 @@ jobs:
       - name: Build
         run: |
           cd build
+          openssl version -a
           cmake -DCMAKE_BUILD_TYPE=Debug .. && cmake --build .
 
 
