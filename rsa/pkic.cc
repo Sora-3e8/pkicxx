@@ -58,7 +58,7 @@ namespace tancrypt
       if (key_container == NULL)
       {
         unsigned long _err = ERR_get_error();
-        throw std::runtime_error("[tancrypt::RSA::pkic::loadPubDER] Failed to load privkey from DER.\nError " + std::to_string(_err) + ", " + ERR_reason_error_string(_err));
+        throw std::runtime_error("[tancrypt::RSA::pkic::loadPubDER] Failed to load pubkey from DER.\nError " + std::to_string(_err) + ", " + ERR_reason_error_string(_err));
       }
     }
 
