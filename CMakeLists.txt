@@ -33,11 +33,8 @@ if(NOT ${CMAKE_SYSTEM_PROCESSOR} MATCHES "(arm|aarch64)")
   endif()
 endif()
 
-
-
 file(GLOB_RECURSE SHARED_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc)
 target_sources(${PROJECT_NAME} INTERFACE ${SHARED_SRCS})
-
 
 file(GLOB_RECURSE COPY_HEADERS
   ${CMAKE_CURRENT_SOURCE_DIR}/aes/include/*.h
@@ -49,7 +46,7 @@ file(GLOB_RECURSE COPY_HEADERS
   ${CMAKE_CURRENT_SOURCE_DIR}/include/dutils.hpp
 )
 
-file(COPY ${COPY_HEADERS} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/include/${PROJECT_NAME}/)
+file(COPY ${COPY_HEADERS} DESTINATION ${CMAKE_BINARY_DIR}/include/${PROJECT_NAME}/)
 
 add_subdirectory(aes)
 add_subdirectory(hash)
@@ -74,7 +71,6 @@ install(EXPORT "${PROJECT_NAME}Targets"
 )
 
 include(CMakePackageConfigHelpers)
-message("Directory is: ${CMAKE_CURRENT_BINARY_DIR}")
 
 configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
   "${CMAKE_CURRENT_BINARY_DIR}/tancryptConfig.cmake"
