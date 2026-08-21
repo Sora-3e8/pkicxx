@@ -60,6 +60,16 @@ int getPubDER(char*[], int)
   return 0;
 }
 
+int getBits(char*[], int)
+{
+  tancrypt::RSA::pkic key;
+  size_t size_in = 2048;
+  key.generate_keypair(size_in);
+  size_t size_out = key.getBits();
+  if (size_in != size_out) return 1;
+  return 0;
+}
+
 int loadPrivDER(char*[], int)
 {
   tancrypt::RSA::pkic key_synth;
@@ -451,6 +461,7 @@ std::map<std::string, std::function<int(char* argv[], int argc)>> handler = {
   { "--loadPubDER", &loadPubDER },
   { "--getPrivPEM", &getPrivPEM },
   { "--getPubPEM", &getPubPEM },
+  { "--getBits", &getBits },
   { "--loadPrivPEM", &loadPrivPEM },
   { "--loadPubPEM", &loadPubPEM },
   { "--loadBundlePEM", &loadBundlePEM },

@@ -86,3 +86,13 @@ Return the RSA keys in PEM string format.
 
 </br>
 </br>
+
+## Get key bitsize
+Returns the bitsize of the key.
+
+<h3><code>RSA::pkic::getBits()</code></h3>
+
+* **Parameters:**
+* **Returns:**
+    * `size_t bitsize` - Bitsize of key (eg. 2048, 3072, 4096, ...)
+

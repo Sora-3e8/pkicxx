@@ -55,11 +55,17 @@ namespace tancrypt
       const unsigned char* content = DER.data();
       d2i_PublicKey(EVP_PKEY_RSA, &key_container, &content, DER.size());
 
-      if (key_container == NULL)
+      if (key_container == nullptr)
       {
         unsigned long _err = ERR_get_error();
         throw std::runtime_error("[tancrypt::RSA::pkic::loadPubDER] Failed to load pubkey from DER.\nError " + std::to_string(_err) + ", " + ERR_reason_error_string(_err));
       }
+    }
+
+    size_t pkic::getBits()
+    {
+      int res = EVP_PKEY_get_bits(key_container);
+      return ((res > -1) ? res : 0);
     }
 
     dutils::dbuffer pkic::getPrivDER()

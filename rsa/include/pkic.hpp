@@ -44,6 +44,8 @@ namespace tancrypt
         void exportPubPEM(const char* file);
         void exportBundlePEM(const char* file);
 
+        size_t getBits();
+
       private:
         ::evp_pkey_st* key_container = nullptr;
     };
