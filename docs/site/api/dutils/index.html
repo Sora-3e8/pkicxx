@@ -753,6 +753,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#char" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Char
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#vector" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -951,8 +962,9 @@
 <h2 id="overview">Overview</h2>
 <p>Helpful utilities, provides custom data buffer and data utility functions.  </p>
 <h2 id="dbuffer">Dbuffer</h2>
-<p>Useful class for storing data, based on <code class="language-cpp highlight"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="o">&gt;</span></code>.<br />
-Has an easy conversion method from string and back.</p>
+<p>Useful class for storing data.<br />
+Has an easy conversion method from string and back.<br />
+Various methods of initialization are available.</p>
 <h3 id="constructors">Constructors</h3>
 <p></br></p>
 <h4 id="initializer-list">Initializer list</h4>
@@ -966,14 +978,38 @@ Has an easy conversion method from string and back.</p>
 </li>
 </ul>
 <p></br></p>
-<h4 id="vector">Vector</h4>
-<p>Copies data from <code class="language-cpp highlight"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="o">&gt;</span></code> to newly created blank dbuffer,
-this is primarily for compatibility purposes, but direct construction of <code class="language-cpp highlight"><span class="n">dutils</span><span class="o">::</span><span class="n">dbuffer</span></code> is more efficient.</p>
-<h4><code>dutils::dbuffer(std::vector<unsigned char> dbuffer)</code></h4>
+<h4 id="char">Char</h4>
+<p>Initializes buffer and copies the char data into it.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In case you wish to assign the data without copying you can use the _data, but you have to update _size as well. </p>
+</div>
+<h4><code>dutils::dbuffer(const char* src, size_t size)</code></h4>
 
 <ul>
 <li><strong>Parameters:</strong><ul>
-<li><code class="language-cpp highlight"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">unsinged</span><span class="w"> </span><span class="kt">char</span><span class="o">&gt;</span><span class="w"> </span><span class="n">buffer</span></code> - Buffer to copy</li>
+<li><code class="language-cpp highlight"><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">src</span></code> - Data to copy</li>
+</ul>
+</li>
+</ul>
+<h4><code>dutils::dbuffer(const unsigned char* src, size_t size)</code></h4>
+
+<ul>
+<li><strong>Parameters:</strong><ul>
+<li><code class="language-cpp highlight"><span class="k">const</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">src</span></code> - Data to copy</li>
+</ul>
+</li>
+</ul>
+<p></br>
+</br></p>
+<h4 id="vector">Vector</h4>
+<p>Copies data from <code class="language-cpp highlight"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="o">&gt;</span></code> to newly created blank dbuffer,
+this is primarily for compatibility purposes, but direct construction of <code class="language-cpp highlight"><span class="n">dutils</span><span class="o">::</span><span class="n">dbuffer</span></code> is more efficient.</p>
+<h4><code>dutils::dbuffer(std::vector<unsigned char> data)</code></h4>
+
+<ul>
+<li><strong>Parameters:</strong><ul>
+<li><code class="language-cpp highlight"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">unsinged</span><span class="w"> </span><span class="kt">char</span><span class="o">&gt;</span><span class="w"> </span><span class="n">data</span></code> - Buffer to copy</li>
 </ul>
 </li>
 </ul>

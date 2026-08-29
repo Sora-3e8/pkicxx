@@ -4,8 +4,9 @@
 Helpful utilities, provides custom data buffer and data utility functions.  
 
 ## Dbuffer
-Useful class for storing data, based on `#!cpp std::vector<unsigned char>`.  
-Has an easy conversion method from string and back.
+Useful class for storing data.  
+Has an easy conversion method from string and back.  
+Various methods of initialization are available.
 
 ### Constructors
 
@@ -21,14 +22,33 @@ Equivalent to `#!cpp std::vector<unsigned char> buffer = {1,2,3...};`
 
 </br>
 
+#### Char
+Initializes buffer and copies the char data into it.
+
+!!! Note 
+    In case you wish to assign the data without copying you can use the _data, but you have to update _size as well. 
+
+<h4><code>dutils::dbuffer(const char* src, size_t size)</code></h4> 
+
+* **Parameters:**
+    * `#!cpp const char* src` - Data to copy
+
+<h4><code>dutils::dbuffer(const unsigned char* src, size_t size)</code></h4> 
+
+* **Parameters:**
+    * `#!cpp const unsigned char* src` - Data to copy
+
+</br>
+</br>
+
 #### Vector
 Copies data from `#!cpp std::vector<unsigned char>` to newly created blank dbuffer,
 this is primarily for compatibility purposes, but direct construction of `#!cpp dutils::dbuffer` is more efficient.
 
-<h4><code>dutils::dbuffer(std::vector<unsigned char> dbuffer)</code></h4>
+<h4><code>dutils::dbuffer(std::vector<unsigned char> data)</code></h4>
 
 * **Parameters:**
-    * `#!cpp std::vector<unsinged char> buffer` - Buffer to copy
+    * `#!cpp std::vector<unsinged char> data` - Buffer to copy
 
 </br>
 

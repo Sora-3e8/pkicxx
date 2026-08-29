@@ -16,6 +16,8 @@ namespace dutils
     public:
       dbuffer() { };
       ~dbuffer() { delete[] _data; };
+      size_t _size = 0;
+      unsigned char* _data = nullptr;
 
       dbuffer(dbuffer&& other) noexcept
       {
@@ -62,21 +64,7 @@ namespace dutils
         memcpy(this->_data, src, _size);
       }
 
-      dbuffer(const char*& src, size_t size)
-      {
-        this->_size = size;
-        this->_data = new unsigned char[_size];
-        memcpy(this->_data, src, _size);
-      }
-
       dbuffer(const unsigned char* src, size_t size)
-      {
-        this->_size = size;
-        this->_data = new unsigned char[_size];
-        memcpy(this->_data, src, _size);
-      }
-
-      dbuffer(const unsigned char*& src, size_t size)
       {
         this->_size = size;
         this->_data = new unsigned char[_size];
@@ -165,10 +153,6 @@ namespace dutils
       {
         return this->_size;
       }
-
-    private:
-      size_t _size = 0;
-      unsigned char* _data = nullptr;
   };
 
   static std::string hexStr(const dbuffer& data)
