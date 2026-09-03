@@ -38,6 +38,18 @@ namespace tancrypt
       key_container = EVP_RSA_gen(length);
     }
 
+    void pkic::loadPrivDER(unsigned char* DER, size_t size)
+    {
+      const unsigned char* content = DER;
+      d2i_PrivateKey(EVP_PKEY_RSA, &key_container, &content, size);
+
+      if (key_container == NULL)
+      {
+        unsigned long _err = ERR_get_error();
+        throw std::runtime_error("[tancrypt::RSA::pkic::loadPrivDER] Failed to load privkey from DER.\nError " + std::to_string(_err) + ", " + ERR_reason_error_string(_err));
+      }
+    }
+
     void pkic::loadPrivDER(dutils::dbuffer& DER)
     {
       const unsigned char* content = DER.data();
@@ -47,6 +59,18 @@ namespace tancrypt
       {
         unsigned long _err = ERR_get_error();
         throw std::runtime_error("[tancrypt::RSA::pkic::loadPrivDER] Failed to load privkey from DER.\nError " + std::to_string(_err) + ", " + ERR_reason_error_string(_err));
+      }
+    }
+
+    void pkic::loadPubDER(unsigned char* DER, size_t size)
+    {
+      const unsigned char* content = DER;
+      d2i_PublicKey(EVP_PKEY_RSA, &key_container, &content, size);
+
+      if (key_container == nullptr)
+      {
+        unsigned long _err = ERR_get_error();
+        throw std::runtime_error("[tancrypt::RSA::pkic::loadPubDER] Failed to load pubkey from DER.\nError " + std::to_string(_err) + ", " + ERR_reason_error_string(_err));
       }
     }
 

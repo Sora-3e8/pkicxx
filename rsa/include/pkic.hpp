@@ -23,6 +23,8 @@ namespace tancrypt
         bool isInitialized();
 
         // DER loaders
+        void loadPrivDER(unsigned char* DER, size_t size);
+        void loadPubDER(unsigned char* DER, size_t size);
         void loadPrivDER(dutils::dbuffer& DER);
         void loadPubDER(dutils::dbuffer& DER);
 
